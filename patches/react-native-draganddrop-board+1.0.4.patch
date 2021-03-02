@@ -1,0 +1,46 @@
+diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
+index 97c232e..27b0dea 100644
+--- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
++++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { FlatList } from 'react-native'
++import { FlatList,Text,TouchableOpacity,View } from 'react-native'
+ import {
+   bool,
+   func,
+@@ -23,7 +23,8 @@ import {
+   SumWrapper
+ } from './Column.styled'
+ 
+-const COLUMN_WIDTH = 0.78 * deviceWidth
++
++const COLUMN_WIDTH = 0.65 * deviceWidth
+ const PADDING = 32
+ const ONE_COLUMN_WIDTH = deviceWidth - PADDING
+ 
+@@ -242,6 +243,11 @@ class Column extends React.Component {
+             enableEmptySections
+           />
+         }
++        <View style={{justifyContent:'center',alignItems:'center',marginBottom:10}}>
++        <TouchableOpacity onPress={() => this.props.AddNewCard(column.data().name)}>
++          <Text style={{fontFamily:'Nunito-Light',fontSize:14}}>+ Add New Card</Text>
++        </TouchableOpacity>
++        </View>
+       </ColumnWrapper>
+     )
+ 
+diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
+index fc0f198..a76fe04 100644
+--- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
++++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
+@@ -36,6 +36,8 @@ const Paragraph = styled.Text`
+ 
+ const RowWrapper = styled.View`
+   opacity: 1;
++  alignItems: center;
++  justifyContent: center;
+ `
+ 
+ const SumWrapper = styled.View`

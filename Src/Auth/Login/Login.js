@@ -55,7 +55,7 @@ function Login(props) {
           </View>
           <View style={{ flexDirection: "row" }}>
             <FastImage
-              style={{ width: 143, height: 23 }}
+              style={{ width: moderateScale(143), height: moderateScale(23) }}
               source={require("../../Assets/Logo/whiteboard.png")}
             />
           </View>
@@ -145,7 +145,7 @@ function Login(props) {
           >
             <TouchableOpacity>
               <FastImage
-                style={{ width: 50, height: 50 }}
+                style={{ width: moderateScale(50), height: moderateScale(50) }}
                 source={require("../../Assets/Image/glogo.png")}
               />
             </TouchableOpacity>

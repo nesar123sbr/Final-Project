@@ -60,7 +60,7 @@ function Register(props) {
           </View>
           <View style={{flexDirection: 'row'}}>
             <FastImage
-              style={{width: 143, height: 23}}
+              style={{width:moderateScale(143) , height:moderateScale(23) }}
               source={require('../../Assets/Logo/whiteboard.png')}
             />
           </View>

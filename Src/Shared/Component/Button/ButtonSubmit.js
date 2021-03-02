@@ -5,7 +5,7 @@ import {moderateScale} from 'react-native-size-matters'
 
 export default function ButtonSubmit ({buttonName,onPress}) {
     return (
-        <TouchableOpacity onPress={onPress} style={styles.buttonAuthcontainer}>
+        <TouchableOpacity onPress={onPress} style={styles.buttonSubContainer}>
         <Nunito
         title={buttonName}
         type="SemiBold"
@@ -17,7 +17,7 @@ export default function ButtonSubmit ({buttonName,onPress}) {
 }
 const styles = StyleSheet.create({
 
-    buttonAuthcontainer: {
+    buttonSubContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

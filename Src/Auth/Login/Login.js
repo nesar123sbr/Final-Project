@@ -116,7 +116,7 @@ function Login(props) {
             <ButtonSubmit buttonName="Submit" onPress={loginAction} />
           </View>
           <View style={{ alignSelf: "center", marginTop: moderateScale(24) }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
               <Nunito
                 type="Bold"
                 color="#80848D"

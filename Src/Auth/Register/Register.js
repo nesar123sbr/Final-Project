@@ -134,7 +134,7 @@ function Register(props) {
             <ButtonSubmit buttonName="Submit" onPress={AddUser} />
           </View>
           <View style={{alignSelf: 'center', marginTop: moderateScale(24)}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
               <Nunito
                 type="Bold"
                 color="#80848D"

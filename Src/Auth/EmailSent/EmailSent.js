@@ -13,7 +13,9 @@ function EmailSent (props) {
 
         <View>
             <View style={{flexDirection:'row', justifyContent:'space-between', margin:15}}>
-                <Image source={require('../../Assets/Logo/whiteboard.png')}/>
+                <View style={{marginTop:10, marginLeft:5}}>
+                    <Image source={require('../../Assets/Logo/whiteboard.png')}/>
+                </View>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={{color:'#0018ed', backgroundColor:'#c4ccff', paddingVertical:10, paddingHorizontal:10}}>SignIn</Text>
                 </TouchableOpacity>
@@ -22,9 +24,9 @@ function EmailSent (props) {
             <Text style={{marginTop:15, paddingHorizontal:wp(5), marginBottom:15}}>Please check your inbox and click in the received link to reset a password</Text>
             {/* <TextInput style={{borderColor:'grey', paddingVertical:10, marginHorizontal:wp(5), borderWidth:2, paddingHorizontal:10}} placeholder="Email" /> */}
             <TouchableOpacity style={{paddingHorizontal:wp(5)}} onPress={() => navigation.navigate('ResetPassword')}>
-                <Text style={{color:'white', backgroundColor:'#4354ef', paddingVertical:10, textAlign:'center', borderRadius:20, marginTop:20}}>Login</Text>
+                <Text style={{color:'white', backgroundColor:`#9932cc`, paddingVertical:10, textAlign:'center', borderRadius:20, marginTop:20}}>Login</Text>
             </TouchableOpacity>
-            <View style={{flexDirection:'row', justifyContent:'center'}}>
+            <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
                 <Text>Didn’t receive the link ?</Text>
                 <TouchableOpacity>
                     <Text style={{color:'#4354ef'}}>Resent</Text>

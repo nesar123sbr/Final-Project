@@ -33,11 +33,11 @@ const StackNavigator = ({navigation, route}) => {
         name="EmailSent"
         options={{headerShown: false}}
       />
-       <StackNav.Screen
+       {/* <StackNav.Screen
         component={ResetPassword}
         name="ResetPassword"
         options={{headerShown: false}}
-      />
+      /> */}
       
   
     </StackNav.Navigator>

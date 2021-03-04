@@ -1,42 +1,88 @@
-import React from 'react';
-import {View, TouchableOpacity, TextInput, Text, Image  } from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import Nunito from '../../Shared/Component/Nunito';
-import {moderateScale} from 'react-native-size-matters';
+import React from "react";
+import { View, TouchableOpacity } from "react-native";
+import Nunito from "../../Shared/Component/Nunito";
+import ButtonAuth from "../../Shared/Component/Button/ButtonAuth";
+import ButtonSubmit from "../../Shared/Component/Button/ButtonSubmit";
+import { connect } from "react-redux";
+import { moderateScale } from "react-native-size-matters";
+import FastImage from "react-native-fast-image";
 
+function EmailSent(props) {
+  const { navigation } = props;
 
-
-function EmailSent (props) {
-    const {navigation} = props;
-    return(
-        <>
-
-        <View>
-            <View style={{flexDirection:'row', justifyContent:'space-between', margin:15}}>
-                <View style={{marginTop:10, marginLeft:5}}>
-                    <Image source={require('../../Assets/Logo/whiteboard.png')}/>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={{color:'#0018ed', backgroundColor:'#c4ccff', paddingVertical:10, paddingHorizontal:10}}>SignIn</Text>
-                </TouchableOpacity>
-            </View>
-            <Text style={{marginTop:hp(20), paddingHorizontal:wp(5), fontSize:28, fontWeight:'bold'}}>Email has been sent!</Text>
-            <Text style={{marginTop:15, paddingHorizontal:wp(5), marginBottom:15}}>Please check your inbox and click in the received link to reset a password</Text>
-            {/* <TextInput style={{borderColor:'grey', paddingVertical:10, marginHorizontal:wp(5), borderWidth:2, paddingHorizontal:10}} placeholder="Email" /> */}
-            <TouchableOpacity style={{paddingHorizontal:wp(5)}} onPress={() => navigation.navigate('ResetPassword')}>
-                <Text style={{color:'white', backgroundColor:`#9932cc`, paddingVertical:10, textAlign:'center', borderRadius:20, marginTop:20}}>Login</Text>
-            </TouchableOpacity>
-            <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
-                <Text>Didn’t receive the link ?</Text>
-                <TouchableOpacity>
-                    <Text style={{color:'#4354ef'}}>Resent</Text>
-                </TouchableOpacity>
-            </View>
+  return (
+    <>
+      <View style={{ margin: moderateScale(16) }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: moderateScale(20),
+          }}
+        >
+          <FastImage
+            style={{ width: moderateScale(143), height: moderateScale(23) }}
+            source={require("../../Assets/Logo/whiteboard.png")}
+          />
+          <ButtonAuth
+            onPress={() => navigation.navigate("Login")}
+            buttonName="Sign In"
+          />
         </View>
-        </>
-    )
+        <View style={{ marginTop: moderateScale(100) }}>
+          <Nunito
+            title="Email has been sent!"
+            size={moderateScale(24)}
+            type="Bold"
+          />
+          <View style={{ marginBottom: moderateScale(15) }}>
+            <Nunito
+              title={props.respond}
+              size={moderateScale(14)}
+              style={{ paddingTop: moderateScale(20) }}
+              textAlign="left"
+            />
+          </View>
+        </View>
 
+        <ButtonSubmit
+          buttonName="Login"
+          onPress={() => navigation.navigate("Login")}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: moderateScale(10),
+          }}
+        >
+          <Nunito
+            title="Didn't receive link ?"
+            size={moderateScale(14)}
+            type="light"
+            decoration="underline"
+          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            <Nunito
+              title=" Resend"
+              size={moderateScale(14)}
+              type="light"
+              color="blue"
+              decoration="underline"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
+}
+const mapStateToProps = (state) => ({
+  respond: state.EmailSentReducer.respond,
+});
 
-};
+const mapDispatchToProps = {};
 
-export default (EmailSent);
+export default connect(mapStateToProps, mapDispatchToProps)(EmailSent);

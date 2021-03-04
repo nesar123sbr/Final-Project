@@ -44,20 +44,20 @@ function Login(props) {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "flex-end",
+              alignItems:'center',
+              justifyContent: "space-between",
               marginTop: moderateScale(20),
             }}
           >
-            <ButtonAuth
-              onPress={() => navigation.navigate("Register")}
-              buttonName="Sign Up"
-            />
-          </View>
-          <View style={{ flexDirection: "row" }}>
             <FastImage
               style={{ width: moderateScale(143), height: moderateScale(23) }}
               source={require("../../Assets/Logo/whiteboard.png")}
             />
+            <ButtonAuth
+              onPress={() => navigation.navigate("Register")}
+              buttonName="Sign Up"
+            />
+            
           </View>
 
           <View

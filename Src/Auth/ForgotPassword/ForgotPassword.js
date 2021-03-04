@@ -7,57 +7,59 @@ import {
 import Nunito from "../../Shared/Component/Nunito";
 import { moderateScale } from "react-native-size-matters";
 import { Input } from "react-native-elements";
-import Entypo from "react-native-vector-icons/Entypo";
+import ButtonAuth from "../../Shared/Component/Button/ButtonAuth";
+import FastImage from "react-native-fast-image";
+import ButtonSubmit from "../../Shared/Component/Button/ButtonSubmit";
+import {changePassword} from './Redux/Action'
+import { connect } from 'react-redux'
+
 
 function ForgotPassword(props) {
   const { navigation } = props;
+  const [changePass, setChangePass] = useState("");
+  const changePassword = (text) => {
+    setChangePass(text);
+  };
+  const actionChange = () => {
+    props.changePassword(changePass)
+  }
 
   return (
     <>
-      <View>
+      <View style={{ margin: moderateScale(16) }}>
         <View
           style={{
             flexDirection: "row",
+            alignItems: "center",
             justifyContent: "space-between",
-            margin: 15,
+            marginTop: moderateScale(20),
           }}
         >
-          <View style={{ marginTop: 10, marginLeft: 5 }}>
-            <Image source={require("../../Assets/Logo/whiteboard.png")} />
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text
-              style={{
-                color: "#0018ed",
-                backgroundColor: "#c4ccff",
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-              }}
-            >
-              SignIn
-            </Text>
-          </TouchableOpacity>
+          <FastImage
+            style={{ width: moderateScale(143), height: moderateScale(23) }}
+            source={require("../../Assets/Logo/whiteboard.png")}
+          />
+          <ButtonAuth
+            onPress={() => navigation.navigate("Login")}
+            buttonName="Sign In"
+          />
         </View>
-        <Text
-          style={{
-            marginTop: hp(20),
-            paddingHorizontal: wp(5),
-            fontSize: 28,
-            fontWeight: "bold",
-          }}
-        >
-          Forgot your Password?
-        </Text>
-        <Text
-          style={{ marginTop: 15, paddingHorizontal: wp(5), marginBottom: 15 }}
-        >
-          Enter Registered Email
-        </Text>
-        {/* <TextInput style={{borderColor:'grey', paddingVertical:10, marginHorizontal:wp(5), borderWidth:2, paddingHorizontal:10}} placeholder="Email" /> */}
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginTop: moderateScale(100) }}>
+          <Nunito
+            title="Forgot your Password?"
+            size={moderateScale(24)}
+            type="Bold"
+          />
+          <Nunito
+            title="Enter Registered Email"
+            size={moderateScale(14)}
+            style={{ paddingTop: moderateScale(20) }}
+          />
+        </View>
+        <View style={{ paddingTop: moderateScale(15) }}>
           <Input
             containerStyle={{ justifyContent: "center" }}
-            onChangeText={(text) => validateEmail(text)}
+            onChangeText={(text) => changePassword(text)}
             inputContainerStyle={{
               width: moderateScale(330),
               height: moderateScale(50),
@@ -71,54 +73,43 @@ function ForgotPassword(props) {
           />
         </View>
 
-        <TouchableOpacity
-          style={{ paddingHorizontal: wp(5) }}
-          onPress={() => navigation.navigate("EmailSent")}
-        >
-          <Text
-            style={{
-              color: "white",
-              backgroundColor: `#9932cc`,
-              paddingVertical: 10,
-              textAlign: "center",
-              borderRadius: 20,
-              marginTop: 20,
-            }}
-          >
-            Send
-          </Text>
-        </TouchableOpacity>
+        <ButtonSubmit
+          buttonName="Send"
+          onPress={actionChange}
+        />
         <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
-            marginTop: 10,
+            marginTop: moderateScale(10),
           }}
         >
-          <Text
-            style={{
-              textDecorationLine: "underline",
-              fontWeight: "bold",
-              color: `#808080`,
-            }}
-          >
-            Remember Password
-          </Text>
+          <Nunito
+            title="Remember Password ?"
+            size={moderateScale(14)}
+            type="light"
+            decoration="underline"
+          />
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text
-              style={{
-                textDecorationLine: "underline",
-                fontWeight: "bold",
-                color: `#9932cc`,
-              }}
-            >
-              Login
-            </Text>
+            <Nunito
+              title=" Login"
+              size={moderateScale(14)}
+              type="light"
+              color="blue"
+              decoration="underline"
+            />
           </TouchableOpacity>
         </View>
       </View>
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  
+})
 
-export default ForgotPassword;
+const mapDispatchToProps = {
+  changePassword
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (ForgotPassword);

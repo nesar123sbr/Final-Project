@@ -7,6 +7,7 @@ import { setLoading } from "../../../Store/GlobalAction";
 
 function* forgotPassword(payload) {
   try {
+    yield put(setLoading(true));
     const { changePass } = payload;
     const body = {
       email: changePass,
@@ -28,9 +29,13 @@ function* forgotPassword(payload) {
         params: {},
       });
       console.log("berhasil", respond.data.message);
+    } else {
+      Alert.alert(respond.data.message);
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(setLoading(false));
   }
 }
 export function* forgotPasswordSaga() {

@@ -12,6 +12,8 @@ import FastImage from "react-native-fast-image";
 import ButtonSubmit from "../../Shared/Component/Button/ButtonSubmit";
 import {changePassword} from './Redux/Action'
 import { connect } from 'react-redux'
+import Loading from "../../Shared/Component/Loading";
+import { setLoading } from "../../Store/GlobalAction";
 
 
 function ForgotPassword(props) {
@@ -26,7 +28,10 @@ function ForgotPassword(props) {
 
   return (
     <>
-      <View style={{ margin: moderateScale(16) }}>
+    {props.isLoading ? (
+        <Loading />
+      ) : (
+        <View style={{ margin: moderateScale(16) }}>
         <View
           style={{
             flexDirection: "row",
@@ -101,15 +106,18 @@ function ForgotPassword(props) {
           </TouchableOpacity>
         </View>
       </View>
+      )}
+      
     </>
   );
 }
 const mapStateToProps = (state) => ({
-  
+  isLoading: state.GlobalReducer.isLoading,
 })
 
 const mapDispatchToProps = {
-  changePassword
+  changePassword,
+  setLoading
 }
 
 export default connect(mapStateToProps,mapDispatchToProps) (ForgotPassword);

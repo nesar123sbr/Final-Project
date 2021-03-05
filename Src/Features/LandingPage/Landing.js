@@ -1,22 +1,28 @@
-import React, {useState} from 'react';
-import {View, FlatList, Text, StatusBar, TouchableOpacity} from 'react-native';
-import Nunito from '../../Shared/Component/Nunito';
-import {moderateScale} from 'react-native-size-matters';
-import CardBoard from '../../Shared/Component/Card/CardBoard';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux'
-import {heightPercentageToDP as hp}  from 'react-native-responsive-screen'
+import React, { useState } from "react";
+import {
+  View,
+  FlatList,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import Nunito from "../../Shared/Component/Nunito";
+import { moderateScale } from "react-native-size-matters";
+import CardBoard from "../../Shared/Component/Card/CardBoard";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { connect } from "react-redux";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 // cardTitle1, cardTitle2, progress,onPress,countTask
 const fromAPI = [
   {
-    title: 'idev abal2',
+    title: "idev abal2",
   },
   {
-    title: 'e-project abal2',
+    title: "e-project abal2",
   },
   {
-    title: 'e-idev abal2',
+    title: "e-idev abal2",
   },
 ];
 const dummytitle = fromAPI.map((value, index) => {
@@ -28,43 +34,42 @@ const dummytitle = fromAPI.map((value, index) => {
 });
 const dataFromDummyAPI = [
   {
-    cardTitle1: 'idev internal23',
-    cardTitle2: 'on idev Project',
-    progress: 'Done',
+    cardTitle1: "idev internal23",
+    cardTitle2: "on idev Project",
+    progress: "Done",
     countTask: 5,
   },
 
   {
-    cardTitle1: 'idev internal45',
-    cardTitle2: 'on idev Project',
-    progress: 'Done',
+    cardTitle1: "idev internal45",
+    cardTitle2: "on idev Project",
+    progress: "Done",
     countTask: 5,
   },
 
   {
-    cardTitle1: 'idev internal67',
-    cardTitle2: 'on idev Project',
-    progress: 'Done',
+    cardTitle1: "idev internal67",
+    cardTitle2: "on idev Project",
+    progress: "Done",
     countTask: 5,
   },
 ];
 
 function Landing(props) {
-  const {navigation} = props;
+  const { navigation } = props;
   const [data, setData] = useState(dummytitle);
   const [even, setEven] = useState(true);
-  
 
   const setFuncCollaps = (index) => {
     const currentData = data[index];
-    const newData = {...currentData, expanded: !currentData.expanded};
+    const newData = { ...currentData, expanded: !currentData.expanded };
     dummytitle[index] = newData;
     setData(dummytitle);
     setEven(!even);
   };
   // console.log(data2)
 
-  const renderTitle = ({item, index}) => {
+  const renderTitle = ({ item, index }) => {
     const ItemSeparatorView = () => {
       return (
         <View
@@ -76,7 +81,7 @@ function Landing(props) {
     };
 
     return (
-      <View style={{backgroundColor:'white'}}>
+      <View style={{ backgroundColor: "white" }}>
         <StatusBar
           barStyle="light-content"
           // dark-content, light-content and default
@@ -92,90 +97,104 @@ function Landing(props) {
           style={{
             marginTop: moderateScale(25),
             marginBottom: moderateScale(25),
-            justifyContent:'space-evenly',
-            alignItems:'center'
-          }}>
-          <View style={{flexDirection:'row',alignSelf:'flex-start',marginLeft:moderateScale(16),marginBottom:moderateScale(10)}}>
-          <Nunito
-            title={item.title}
-            type="SemiBold"
-            size={moderateScale(15)}
-            color="black"
-          />
-          <TouchableOpacity style={{paddingLeft:moderateScale(5)}} onPress={() => setFuncCollaps(index)}>
-            <MaterialCommunityIcons
-              name={item.expanded ? 'arrow-up-drop-circle' : 'arrow-down-drop-circle'}
-              size={moderateScale(25)}
-              color='#80848D'
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignSelf: "flex-start",
+              marginLeft: moderateScale(16),
+              marginBottom: moderateScale(10),
+            }}
+          >
+            <Nunito
+              title={item.title}
+              type="SemiBold"
+              size={moderateScale(15)}
+              color="black"
             />
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={{ paddingLeft: moderateScale(5) }}
+              onPress={() => setFuncCollaps(index)}
+            >
+              <MaterialCommunityIcons
+                name={
+                  item.expanded
+                    ? "arrow-down-drop-circle"
+                    : "arrow-up-drop-circle"
+                }
+                size={moderateScale(25)}
+                color="#80848D"
+              />
+            </TouchableOpacity>
           </View>
-          <View style={{borderBottomColor: '#E1E1E1',borderBottomWidth: 1 ,width:'94%' }}/>
+          <View
+            style={{
+              borderBottomColor: "#E1E1E1",
+              borderBottomWidth: 1,
+              width: "94%",
+            }}
+          />
         </View>
         <View>
-        {item.expanded ? (
-          
-          <FlatList
-            horizontal
-            data={dataFromDummyAPI}
-            
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={ItemSeparatorView}
-            keyExtractor={(item, index) => item.cardTitle1}
-            renderItem={({item}) => (
-              <CardBoard
-                cardTitle1={item.cardTitle1}
-                cardTitle2={item.cardTitle2}
-                progress={item.progress}
-                countTask={item.countTask}
-                onTap={() => navigation.navigate('TeamBoard')}
-              />
-            )}
-          />
-        ) : null}
+          {item.expanded ? (
+            <FlatList
+              horizontal
+              data={dataFromDummyAPI}
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={ItemSeparatorView}
+              keyExtractor={(item, index) => item.cardTitle1}
+              renderItem={({ item }) => (
+                <CardBoard
+                  cardTitle1={item.cardTitle1}
+                  cardTitle2={item.cardTitle2}
+                  progress={item.progress}
+                  countTask={item.countTask}
+                  onTap={() => navigation.navigate("TeamBoard")}
+                />
+              )}
+            />
+          ) : null}
         </View>
       </View>
     );
   };
   return (
-    <View style={{paddingBottom:hp(10)}}>
+    <View style={{ paddingBottom: hp(10) }}>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems:'center',
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
           paddingTop: moderateScale(10),
           paddingLeft: moderateScale(5),
           paddingRight: moderateScale(5),
-          backgroundColor:'white'
-        }}>
+          backgroundColor: "white",
+        }}
+      >
         <Nunito title="Boards" type="SemiBold" size={moderateScale(28)} />
-        <TouchableOpacity onPress={() => navigation.navigate('Team')}>
-        <Nunito
-          title="TEAM "
-          type="SemiBold"
-          size={moderateScale(15)}
-          color="blue"
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("Team")}>
+          <Nunito
+            title="TEAM "
+            type="SemiBold"
+            size={moderateScale(15)}
+            color="blue"
+          />
         </TouchableOpacity>
       </View>
-      
+
       <FlatList
         data={data}
         renderItem={(item) => renderTitle(item)}
         keyExtractor={(item, index) => item.title}
-        
       />
-    
     </View>
   );
 }
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-  
-}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Landing)
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

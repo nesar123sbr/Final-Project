@@ -59,6 +59,12 @@ function Login(props) {
             />
             
           </View>
+          {/* <TouchableOpacity onPress={() => navigation.navigate('ChangeEmail')}>
+            <Text>Change Email</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
+            <Text>ChangePassword</Text>
+          </TouchableOpacity> */}
 
           <View
             style={{

@@ -10,7 +10,7 @@ import { ProfileReducer } from "../Features/ProfilePage/Redux/Reducer";
 const persistConfig = {
   key: "papanputih",
   storage: AsyncStorage,
-  blacklist: [ProfileReducer],
+  blacklist: [],
 };
 
 const SagaMiddleware = createSagaMiddleware();

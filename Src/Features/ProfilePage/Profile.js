@@ -22,10 +22,10 @@ import { patchProfile } from "./Redux/Action";
 import { removeCredential } from "./Redux/Action";
 function Profile(props) {
   const { navigation } = props;
-  const [addName, setAddName] = useState("");
+  const [addName, setAddName] = useState(props.name);
   const [addRole, setAddRole] = useState(props.role);
   const [addIndustry, setAddIndustry] = useState(props.industry);
-  const [addCompany, setCompany] = useState("");
+  const [addCompany, setCompany] = useState(props.company_name);
 
   const changeInName = (text) => {
     setAddName(text);
@@ -46,6 +46,11 @@ function Profile(props) {
 
   useEffect(() => {
     props.getProfile();
+    setAddName(props.name)
+    setAddRole(props.role)
+    setAddIndustry(props.industry)
+    setCompany(props.company_name)
+
   }, [props]);
   const logOut = () => {
     props.logOut();
@@ -190,7 +195,7 @@ function Profile(props) {
         </Text>
         <TextInput
           onChangeText={(text) => changeInName(text)}
-          defaultValue={props.name}
+          value={addName}
           style={{
             borderWidth: 1,
             borderColor: "grey",
@@ -234,7 +239,7 @@ function Profile(props) {
           <DropDownPicker
             items={[
               {label:"education",value:"Education"},
-              {label:"food&beverages",value:"Food & Beverages"},
+              {label:"food&beverages",value:"Food&Beverages"},
               {label:"health services",value:"Health services"},
               {label:"tourism",value:"Tourism"},
               {label:"transportation",value:"Transportation"},
@@ -265,7 +270,7 @@ function Profile(props) {
           onChangeText={(text) => changeInCompany(text)}
           placeholder="none"
           placeholderTextColor="grey"
-          defaultValue={props.company_name}
+          value={addCompany}
           style={{
             borderWidth: 1,
             borderColor: "grey",

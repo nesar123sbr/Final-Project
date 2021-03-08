@@ -74,9 +74,11 @@ function* patchSagaEmail(payload) {
     // yield put(setLoading(true))
 
     const AuthStr = "Bearer ".concat(token);
-    const body = qs.stringify({
-      email: `${payload.email}`,
-    });
+    const body = new FormData()
+    body.append("email",payload.email)
+    // const body = qs.stringify({
+    //   email: `${payload.email}`,
+    // });
     console.log(body, "body ku");
     const config = {
       url: "https://whiteboard-signup.herokuapp.com/profile",
@@ -108,12 +110,17 @@ function* patchSagaProfile(payload){
     // yield put(setLoading(true))
     
     const AuthStr = "Bearer ".concat(token);
-    const body = qs.stringify({
-      name:`${payload.addName}`,
-      role:`${payload.addRole}`,
-      industry:`${payload.addIndustry}`,
-      company_name:`${payload.addCompany}`
-    });
+    const body = new FormData () 
+    body.append("name",payload.addName)
+    body.append("role",payload.addRole)
+    body.append("industry",payload.addIndustry)
+    body.append("company_name",payload.addCompany)
+    // const body = qs.stringify({
+    //   name:`${payload.addName}`,
+    //   role:`${payload.addRole}`,
+    //   industry:`${payload.addIndustry}`,
+    //   company_name:`${payload.addCompany}`
+    // });
     console.log(body, "body ku");
     const config = {
       url: "https://whiteboard-signup.herokuapp.com/profile",
@@ -123,13 +130,11 @@ function* patchSagaProfile(payload){
       validateStatus: (status) => status < 500,
     };
     const respond = yield call(axios, config);
-    console.log(respond.data.status, "bawah ni");
+    console.log(respond, "bawah ni");
     if (respond.status == 200) {
-      yield put({ type: "LOG_OUT" });
-      yield put({type:"SET_OUT_PROFILE"})
-      Toast.show(respond.data.status);
+    
       yield Navigation.navigate({
-        name: "StackNav",
+        name: "Profile",
         params: {},
       });
     } else {

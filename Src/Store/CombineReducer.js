@@ -7,6 +7,7 @@ import { newCardReducer } from "../Features/NewCard/Redux/newCardReducer";
 import { teamReducer } from "../Features/TeamPage/Redux/teamReducer";
 import { taskReducer } from "../Features/TaskPage/Redux/taskReducer";
 import { EmailSentReducer } from "../Auth/EmailSent/Redux/Reducer";
+import {ProfileReducer} from '../Features/ProfilePage/Redux/Reducer'
 
 export const AllReducer = combineReducers({
   LoginReducer,
@@ -17,4 +18,5 @@ export const AllReducer = combineReducers({
   teamReducer,
   taskReducer,
   EmailSentReducer,
+  ProfileReducer
 });

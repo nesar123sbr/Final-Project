@@ -5,11 +5,12 @@ import { AllReducer } from "./CombineReducer";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { SagaWatcher } from "./SagaWatcher";
+import { ProfileReducer } from "../Features/ProfilePage/Redux/Reducer";
 
 const persistConfig = {
   key: "papanputih",
   storage: AsyncStorage,
-  blacklist: [],
+  blacklist: [ProfileReducer],
 };
 
 const SagaMiddleware = createSagaMiddleware();

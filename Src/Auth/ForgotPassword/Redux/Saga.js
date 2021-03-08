@@ -30,7 +30,7 @@ function* forgotPassword(payload) {
       });
       console.log("berhasil", respond.data.message);
     } else {
-      Alert.alert(respond.data.message);
+      Toast.show(respond.data.message);
     }
   } catch (error) {
     console.log(error);

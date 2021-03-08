@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
-index 97c232e..27b0dea 100644
+index 97c232e..0dce46a 100644
 --- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 +++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 @@ -1,5 +1,5 @@
@@ -9,17 +9,50 @@ index 97c232e..27b0dea 100644
  import {
    bool,
    func,
-@@ -23,7 +23,8 @@ import {
+@@ -23,7 +23,9 @@ import {
    SumWrapper
  } from './Column.styled'
  
 -const COLUMN_WIDTH = 0.78 * deviceWidth
 +
++
 +const COLUMN_WIDTH = 0.65 * deviceWidth
  const PADDING = 32
  const ONE_COLUMN_WIDTH = deviceWidth - PADDING
  
-@@ -242,6 +243,11 @@ class Column extends React.Component {
+@@ -80,6 +82,7 @@ class Column extends React.Component {
+       item
+     }
+     return (
++    
+       <RowWrapper
+         ref={ref => this.setItemRef(item, ref)}
+         collapsable={false}
+@@ -88,6 +91,7 @@ class Column extends React.Component {
+       >
+         {renderWrapperRow(props)}
+       </RowWrapper>
++      
+     )
+   }
+ 
+@@ -215,10 +219,15 @@ class Column extends React.Component {
+                 lineHeight={ios ? null : badgeTextFontSize * 1.6}
+               >
+                 {colElements.toString()}
++                
+               </Paragraph>
++              
+             </ParagraphWrapper>
++            <Text>dwdw</Text>
+           </SumWrapper>
++          
+           }
++
+         </RowContainer>
+         {boardRepository
+           .items(column.id()).length - 1 === 0 ?
+@@ -242,6 +251,11 @@ class Column extends React.Component {
              enableEmptySections
            />
          }

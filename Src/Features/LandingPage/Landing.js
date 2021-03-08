@@ -162,7 +162,7 @@ function Landing(props) {
     );
   };
   return (
-    <View style={{ paddingBottom: hp(10) }}>
+    <View style={{ paddingBottom: hp(10),backgroundColor: "white" }}>
       <View
         style={{
           flexDirection: "row",

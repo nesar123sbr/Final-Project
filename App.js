@@ -1,13 +1,15 @@
-import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {Store, Persistor} from './Src/Store/Store';
-import Navigator from './Src/Shared/Navigation/Navigator';
-import CardBoardDetail from './Src/Shared/Component/Card/CardBoardDetail'
-import AnimatedSplash from 'react-native-animated-splash-screen';
-import {navigationRef} from './Src/Shared/Navigation/Nav';
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { Store, Persistor } from "./Src/Store/Store";
+import Navigator from "./Src/Shared/Navigation/Navigator";
+import CardBoardDetail from "./Src/Shared/Component/Card/CardBoardDetail";
+import AnimatedSplash from "react-native-animated-splash-screen";
+import { navigationRef } from "./Src/Shared/Navigation/Nav";
+import Newcard from "./Src/Features/NewCard/Newcard";
+import Team from "./Src/Features/TeamPage/Team";
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,14 +23,16 @@ const App = () => {
   return (
     <Provider store={Store}>
       <PersistGate persistor={Persistor}>
-        <NavigationContainer  ref={navigationRef}>
+        <NavigationContainer ref={navigationRef}>
           <AnimatedSplash
             logoWidht={109}
             logoHeight={109}
             isLoaded={isLoaded}
-            backgroundColor={'#37266C'}
-            logoImage={require('./Src/Assets/Logo/Union.png')}>
-              {/* <CardBoardDetail/> */}
+            backgroundColor={"#37266C"}
+            logoImage={require("./Src/Assets/Logo/Union.png")}
+          >
+            {/* <Team /> */}
+            {/* <Newcard /> */}
             <Navigator />
           </AnimatedSplash>
         </NavigationContainer>

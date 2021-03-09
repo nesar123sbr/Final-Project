@@ -44,20 +44,20 @@ function Login(props) {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "flex-end",
+              alignItems:'center',
+              justifyContent: "space-between",
               marginTop: moderateScale(20),
             }}
           >
+            <FastImage
+              style={{ width: moderateScale(143), height: moderateScale(23) }}
+              source={require("../../Assets/Logo/whiteboard.png")}
+            />
             <ButtonAuth
               onPress={() => navigation.navigate("Register")}
               buttonName="Sign Up"
             />
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <FastImage
-              style={{ width: 143, height: 23 }}
-              source={require("../../Assets/Logo/whiteboard.png")}
-            />
+            
           </View>
 
           <View
@@ -116,7 +116,7 @@ function Login(props) {
             <ButtonSubmit buttonName="Submit" onPress={loginAction} />
           </View>
           <View style={{ alignSelf: "center", marginTop: moderateScale(24) }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
               <Nunito
                 type="Bold"
                 color="#80848D"
@@ -145,7 +145,7 @@ function Login(props) {
           >
             <TouchableOpacity>
               <FastImage
-                style={{ width: 50, height: 50 }}
+                style={{ width: moderateScale(50), height: moderateScale(50) }}
                 source={require("../../Assets/Image/glogo.png")}
               />
             </TouchableOpacity>

@@ -23,7 +23,6 @@ import { setLabel, setListLabel } from "./newCardAction";
 // }
 
 function* postLabelSaga(payload) {
-  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
   try {
     const body = {
       labelName: payload.labelName,

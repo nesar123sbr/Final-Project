@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
-index 97c232e..27b0dea 100644
+index 97c232e..f510cae 100644
 --- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 +++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 @@ -1,5 +1,5 @@
@@ -9,17 +9,79 @@ index 97c232e..27b0dea 100644
  import {
    bool,
    func,
-@@ -23,7 +23,8 @@ import {
+@@ -23,7 +23,9 @@ import {
    SumWrapper
  } from './Column.styled'
  
 -const COLUMN_WIDTH = 0.78 * deviceWidth
 +
++
 +const COLUMN_WIDTH = 0.65 * deviceWidth
  const PADDING = 32
  const ONE_COLUMN_WIDTH = deviceWidth - PADDING
  
-@@ -242,6 +243,11 @@ class Column extends React.Component {
+@@ -80,6 +82,7 @@ class Column extends React.Component {
+       item
+     }
+     return (
++    
+       <RowWrapper
+         ref={ref => this.setItemRef(item, ref)}
+         collapsable={false}
+@@ -88,6 +91,7 @@ class Column extends React.Component {
+       >
+         {renderWrapperRow(props)}
+       </RowWrapper>
++      
+     )
+   }
+ 
+@@ -193,6 +197,7 @@ class Column extends React.Component {
+         width={oneColumn ? ONE_COLUMN_WIDTH : COLUMN_WIDTH}
+         marginRight={oneColumn ? 0 : 8}
+       >
++       
+         <RowContainer>
+           <Paragraph
+             fontSize={columnNameFontSize}
+@@ -201,7 +206,9 @@ class Column extends React.Component {
+           >
+             {column.data().name}
+           </Paragraph>
+-          {isWithCountBadge && <SumWrapper>
++          {isWithCountBadge && 
++          <SumWrapper>
++            
+             <ParagraphWrapper
+               backgroundColor={badgeBackgroundColor}
+               width={badgeWidth}
+@@ -215,11 +222,25 @@ class Column extends React.Component {
+                 lineHeight={ios ? null : badgeTextFontSize * 1.6}
+               >
+                 {colElements.toString()}
++                
+               </Paragraph>
++              
+             </ParagraphWrapper>
++            
++            <TouchableOpacity onPress={this.props.burgerClick}>
++          <View>
++            <View style={{backgroundColor:'grey',height:4,width:4,borderRadius:4}}/>
++            <View style={{backgroundColor:'grey',height:4,width:4,borderRadius:4}}/>
++            <View style={{backgroundColor:'grey',height:4,width:4,borderRadius:4}}/>
++          </View>
++          </TouchableOpacity>
+           </SumWrapper>
++          
+           }
++          
++
+         </RowContainer>
++        
+         {boardRepository
+           .items(column.id()).length - 1 === 0 ?
+           (emptyComponent
+@@ -242,6 +263,11 @@ class Column extends React.Component {
              enableEmptySections
            />
          }
@@ -32,10 +94,23 @@ index 97c232e..27b0dea 100644
      )
  
 diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
-index fc0f198..a76fe04 100644
+index fc0f198..613f2ba 100644
 --- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
 +++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.styled.js
-@@ -36,6 +36,8 @@ const Paragraph = styled.Text`
+@@ -18,10 +18,12 @@ const ColumnWrapper = styled.View`
+ const ParagraphWrapper = styled.View`
+   alignItems: center;
+   justifyContent: center;
++  marginRight:15;
+ `
+ 
+ const RowContainer = styled.View`
+   flexDirection: row;
++  justifyContent: space-between;
+   alignItems: center;
+   paddingVertical: 18;
+   paddingHorizontal: 10;
+@@ -36,12 +38,15 @@ const Paragraph = styled.Text`
  
  const RowWrapper = styled.View`
    opacity: 1;
@@ -44,3 +119,10 @@ index fc0f198..a76fe04 100644
  `
  
  const SumWrapper = styled.View`
+   marginLeft: 8;
+   alignItems: center;
+   justifyContent: center;
++  flexDirection: row;
+ `
+ 
+ export {

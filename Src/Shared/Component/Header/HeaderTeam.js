@@ -3,6 +3,7 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import Nunito from '../Nunito';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen'
 export default function HeaderTeam({title1, onPress}) {
   return (
     <View style={styles.container}>
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
     
   },
   header:{
-      paddingLeft:'30%'
+      paddingLeft:wp(30)
 }
 });

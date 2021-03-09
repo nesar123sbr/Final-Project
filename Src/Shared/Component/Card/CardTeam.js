@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
     shadowRadius:5,
     elevation:3,
     padding: moderateScale(14),
+    marginRight:moderateScale(8),
+    marginBottom:moderateScale(8)
   },
   footerCard: {
     marginTop: moderateScale(50),

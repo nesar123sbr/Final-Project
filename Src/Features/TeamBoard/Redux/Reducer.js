@@ -1,4 +1,5 @@
 const initialState = {
+<<<<<<< HEAD
   listCardTeam: [
     {
       title1: "Meja Putih",
@@ -6,15 +7,16 @@ const initialState = {
       count: "4",
     },
   ],
+=======
+  listCardTeam: [],
+>>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 };
 export const TeamBoardReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_CARD_TEAM":
       return {
         ...state,
-        title1: action.title1,
-        title2: action.title2,
-        count: action.count,
+        listCardTeam:action.payload
       };
 
     default:

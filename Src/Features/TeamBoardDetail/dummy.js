@@ -1,4 +1,3 @@
-// import { BoardRepository } from 'react-native-draganddrop-board'
 import { BoardRepository } from 'react-native-draganddrop-board'
 
 const data = [

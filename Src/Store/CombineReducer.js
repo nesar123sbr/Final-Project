@@ -19,5 +19,6 @@ export const AllReducer = combineReducers({
   teamReducer,
   taskReducer,
   EmailSentReducer,
-  ProfileReducer
+  ProfileReducer,
+  LandingReducer
 });

@@ -10,11 +10,15 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { moderateScale } from "react-native-size-matters";
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from "react-native-size-matters";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TeamStyle } from "./style";
 import { connect } from "react-redux";
 import { postTeam, getListTeam } from "./Redux/teamAction";
+import { getListTeams } from "../LandingPage/Redux/Action";
 
 // const getRandomColor = () => {
 //   return (
@@ -29,6 +33,7 @@ import { postTeam, getListTeam } from "./Redux/teamAction";
 // };
 
 const Team = (props) => {
+  const { navigation } = props;
   // const [randomColor, setRandomColor] = useState(getRandomColor());
   const [addTeam, setAddTeam] = useState(false);
   const [saveTeam, setSaveTeam] = useState("");
@@ -61,9 +66,9 @@ const Team = (props) => {
           <View
             style={{
               width: "100%",
-              height: 50,
+              height: moderateScale(50),
               backgroundColor: "whitesmoke",
-              borderRadius: moderateScale(5),
+              borderRadius: moderateScale(10),
               marginBottom: 10,
               justifyContent: "center",
             }}
@@ -104,10 +109,10 @@ const Team = (props) => {
   const ListTeam = () => {
     return (
       <>
-        <View style={{ margin: 13 }}>
+        <View style={{ margin: moderateScale(13) }}>
           <FlatList
             data={props.teamList}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => item.teamName}
             renderItem={(item) => MyTeam(item)}
           />
         </View>
@@ -116,20 +121,36 @@ const Team = (props) => {
   };
   return (
     <>
-      <ScrollView>
+      <View style={{backgroundColor: "white",height:"100%",width:"100%"}}>
         <View>
-          <View style={TeamStyle.header}>
-            <View style={{ flexDirection: "row" }}>
-              <AntDesign size={moderateScale(20)} name="left" />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingVertical: moderateScale(16),
+              paddingHorizontal: moderateScale(16),
+              
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Boards");
+                  props.getListTeams();
+                }}
+              >
+                <AntDesign size={moderateScale(20)} name="left" />
+              </TouchableOpacity>
               <Text style={{ fontSize: 20, marginLeft: 10 }}>Teams</Text>
             </View>
             <TouchableOpacity onPress={() => setAddTeam(true)}>
-              <Text>+ NEW TEAM</Text>
+              <Text style={{color:"blue"}}>+ NEW TEAM</Text>
             </TouchableOpacity>
           </View>
-          <ListTeam />
         </View>
-      </ScrollView>
+        <ListTeam />
+      </View>
 
       <Modal
         visible={addTeam}
@@ -215,6 +236,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   postTeam,
   getListTeam,
+  getListTeams,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

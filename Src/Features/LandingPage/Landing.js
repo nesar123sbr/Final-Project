@@ -7,6 +7,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { getListTeams } from "./Redux/Action";
+import { getListTeam } from "../TeamPage/Redux/teamAction";
+
+
 const dataFromDummyAPI = [
   {
     cardTitle1: "idev internal23",
@@ -145,8 +148,8 @@ function Landing(props) {
   };
   return (
 
-
     <View style={{ paddingBottom: hp(10),backgroundColor: "white" }}>
+
       <View
         style={{
           flexDirection: "row",
@@ -185,7 +188,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getListTeams,
+  getListTeam,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

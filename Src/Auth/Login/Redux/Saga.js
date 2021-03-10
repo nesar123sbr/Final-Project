@@ -1,18 +1,8 @@
-<<<<<<< HEAD
-import { all, call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
-import * as Navigation from "../../../Shared/Navigation/Nav";
-import { Alert } from "react-native";
-import Toast from "react-native-simple-toast";
-import { setLoading } from "../../../Store/GlobalAction";
-
-=======
 import {all, call, put, takeLatest} from 'redux-saga/effects';
 import axios from 'axios';
 import * as Navigation from '../../../Shared/Navigation/Nav';
 import Toast from 'react-native-simple-toast';
 import {setLoading} from '../../../Store/GlobalAction'
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 function* Login(payload) {
   try {
     yield put(setLoading(true));

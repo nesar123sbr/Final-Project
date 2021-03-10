@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,26 +8,32 @@ import {
   ScrollView,
   FlatList,
   Alert,
-} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {moderateScale} from 'react-native-size-matters';
-import {connect} from 'react-redux';
-import {setExistingLabel, setSelectedLabels} from '../../Redux/newCardAction';
+} from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { moderateScale } from "react-native-size-matters";
+import { connect } from "react-redux";
+import {
+  setExistingLabel,
+  setSelectedLabels,
+  postLabel,
+  getLabel,
+} from "../../Redux/newCardAction";
 
 const LabelModal = (props) => {
+  const [getLabel, setGetLabel] = useState([]);
   const [newLabel, setNewLabel] = useState(false);
-  const [saveLabel, setSaveLabel] = useState('');
-  const [saveColor, setSaveColor] = useState('');
+  const [saveLabel, setSaveLabel] = useState("");
+  const [saveColor, setSaveColor] = useState("");
   const [generateID, setGenerateID] = useState(0);
   const [listColor, setListColor] = useState([
-    '#FFDBDA',
-    '#E0FCF1',
-    '#E5F7FF',
-    '#F2D61E',
-    '#00C2E0',
-    '#51E898',
-    '#FF78CB',
-    '#EB5A46',
+    "#FFDBDA",
+    "#E0FCF1",
+    "#E5F7FF",
+    "#F2D61E",
+    "#00C2E0",
+    "#51E898",
+    "#FF78CB",
+    "#EB5A46",
   ]);
 
   const addExistingLabel = (item) => {
@@ -37,12 +43,13 @@ const LabelModal = (props) => {
       color: saveColor,
     };
 
-    const findExistingLabel = props.existingLabel.find( (value) => value.title === saveLabel && value.color === saveColor,
+    const findExistingLabel = props.existingLabel.find(
+      (value) => value.title === saveLabel && value.color === saveColor
     );
 
     if (findExistingLabel) {
-      Alert.alert('Label already exist!');
-    } else if (newLabel.title === '' && newLabel.color === '') {
+      Alert.alert("Label already exist!");
+    } else if (newLabel.title === "" && newLabel.color === "") {
       props.setExistingLabel([...props.existingLabel]);
     } else {
       props.setExistingLabel([...props.existingLabel, newLabel]);
@@ -52,7 +59,7 @@ const LabelModal = (props) => {
 
   const removeLabels = (item) => {
     const newArray = props.selectedLabels.filter(
-      (data) => data.title !== item.title,
+      (data) => data.title !== item.title
     );
     props.setSelectedLabels([...newArray]);
   };
@@ -65,7 +72,7 @@ const LabelModal = (props) => {
   const addLabels = (item, index) => {
     console.log(item);
     if (item.id === props.selectedLabels[index]?.id) {
-      Alert.alert('Cannot add the same label');
+      Alert.alert("Cannot add the same label");
     } else {
       props.setSelectedLabels([...props.selectedLabels, item]);
     }
@@ -91,14 +98,15 @@ const LabelModal = (props) => {
             borderWidth: 1,
             height: moderateScale(50),
             borderRadius: moderateScale(5),
-            width: '100%',
-            borderColor: 'gray',
+            width: "100%",
+            borderColor: "gray",
             borderWidth: 1,
-            backgroundColor: 'white',
-            justifyContent: 'center',
+            backgroundColor: "white",
+            justifyContent: "center",
             paddingHorizontal: moderateScale(7),
             paddingVertical: moderateScale(8),
-          }}>
+          }}
+        >
           {props.selectedLabels.length ? (
             <FlatList
               horizontal
@@ -107,29 +115,30 @@ const LabelModal = (props) => {
               renderItem={(item) => MySelectedLabels(item)}
             />
           ) : (
-            <Text style={{color: 'gray'}}>Choose your labels</Text>
+            <Text style={{ color: "gray" }}>Choose your labels</Text>
           )}
         </View>
       </>
     );
   };
 
-  const MySelectedLabels = ({item}) => {
+  const MySelectedLabels = ({ item }) => {
     return (
       <>
         <View
           style={{
             backgroundColor: item.color,
-            flexDirection: 'row',
-            alignItems: 'center',
+            flexDirection: "row",
+            alignItems: "center",
             borderRadius: moderateScale(5),
-            justifyContent: 'space-between',
+            justifyContent: "space-between",
             paddingHorizontal: moderateScale(8),
             marginRight: moderateScale(7),
-          }}>
+          }}
+        >
           <Text>{item.title}</Text>
           <TouchableOpacity onPress={() => removeLabels(item)}>
-            <AntDesign name="close" style={{marginLeft: moderateScale(6)}} />
+            <AntDesign name="close" style={{ marginLeft: moderateScale(6) }} />
           </TouchableOpacity>
         </View>
       </>
@@ -142,7 +151,8 @@ const LabelModal = (props) => {
         <View
           style={{
             height: moderateScale(30),
-          }}>
+          }}
+        >
           <FlatList
             horizontal
             data={props.existingLabel}
@@ -154,24 +164,29 @@ const LabelModal = (props) => {
     );
   };
 
-  const MyLabel = ({item, index}) => {
+  const MyLabel = ({ item, index }) => {
     return (
       <>
         <TouchableOpacity
           onPress={() => addLabels(item, index)}
-          style={{marginRight: 12}}>
+          style={{ marginRight: 12 }}
+        >
           <View
             style={{
               padding: moderateScale(7),
-              backgroundColor: item.color,
-              flexDirection: 'row',
-              alignItems: 'center',
+              backgroundColor: "gray",
+              flexDirection: "row",
+              alignItems: "center",
               borderRadius: moderateScale(5),
-              justifyContent: 'center',
-            }}>
-            <Text>{item.title}</Text>
+              justifyContent: "center",
+            }}
+          >
+            <Text>{item.labelName}</Text>
             <TouchableOpacity onPress={() => removeExistingLabel(item)}>
-              <AntDesign name="close" style={{marginLeft: moderateScale(6)}} />
+              <AntDesign
+                name="close"
+                style={{ marginLeft: moderateScale(6) }}
+              />
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -185,29 +200,35 @@ const LabelModal = (props) => {
       <View
         style={{
           height: 500,
-          width: '100%',
-          backgroundColor: 'white',
+          width: "100%",
+          backgroundColor: "white",
           borderRadius: moderateScale(20),
           opacity: 1,
           marginTop: 430,
-          alignSelf: 'center',
-        }}>
-        <View style={{margin: moderateScale(20), marginTop: moderateScale(50)}}>
+          alignSelf: "center",
+        }}
+      >
+        <View
+          style={{ margin: moderateScale(20), marginTop: moderateScale(50) }}
+        >
           <Text
             style={{
               fontSize: moderateScale(15),
               marginBottom: moderateScale(20),
-            }}>
+            }}
+          >
             Labels
           </Text>
           <SelectedLabelsContainer />
+
           <TouchableOpacity onPress={() => setNewLabel(true)}>
             <Text
               style={{
-                color: 'gray',
+                color: "gray",
                 marginTop: moderateScale(20),
                 marginBottom: moderateScale(15),
-              }}>
+              }}
+            >
               Select an option or create one
             </Text>
           </TouchableOpacity>
@@ -218,39 +239,41 @@ const LabelModal = (props) => {
             <View
               style={{
                 padding: moderateScale(10),
-                width: '100%',
-                backgroundColor: '#FFEEE1',
+                width: "100%",
+                backgroundColor: "#FFEEE1",
                 borderRadius: moderateScale(20),
-                alignItems: 'center',
+                alignItems: "center",
                 marginTop: moderateScale(8),
-              }}>
-              <Text style={{color: 'orange'}}>Done</Text>
+              }}
+            >
+              <Text style={{ color: "orange" }}>Done</Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
 
       <Modal visible={newLabel} onRequestClose={() => setNewLabel(false)}>
-        <View style={{backgroundColor: 'gray', flex: 1, opacity: 0.88}}>
+        <View style={{ backgroundColor: "gray", flex: 1, opacity: 0.88 }}>
           <ScrollView>
             <View
               style={{
                 height: 500,
-                width: '100%',
-                backgroundColor: '#d3f0f2',
+                width: "100%",
+                backgroundColor: "#d3f0f2",
                 borderRadius: moderateScale(20),
                 opacity: 1,
                 marginTop: 530,
-                alignSelf: 'center',
-              }}>
-              <View style={{margin: moderateScale(20)}}>
+                alignSelf: "center",
+              }}
+            >
+              <View style={{ margin: moderateScale(20) }}>
                 <TextInput
                   style={{
                     height: 40,
-                    width: '100%',
-                    borderColor: 'gray',
+                    width: "100%",
+                    borderColor: "gray",
                     borderWidth: 1,
-                    backgroundColor: 'white',
+                    backgroundColor: "white",
                     borderRadius: 5,
                   }}
                   placeholderTextColor="gray"
@@ -258,15 +281,16 @@ const LabelModal = (props) => {
                   onChangeText={(text) => setSaveLabel(text)}
                 />
 
-                <Text style={{margin: 7}}>Label Color</Text>
+                <Text style={{ margin: 7 }}>Label Color</Text>
                 <FlatList
                   horizontal
                   data={listColor}
-                  keyExtractor={({item}) => item}
-                  renderItem={({item}) => (
+                  keyExtractor={({ item }) => item}
+                  renderItem={({ item }) => (
                     <TouchableOpacity
                       onPress={() => setSaveColor(item)}
-                      style={{margin: 7}}>
+                      style={{ margin: 7 }}
+                    >
                       <View
                         style={{
                           height: 30,
@@ -274,7 +298,7 @@ const LabelModal = (props) => {
                           borderRadius: 20,
                           backgroundColor: item,
                           borderWidth: 3,
-                          borderColor: 'white',
+                          borderColor: "white",
                         }}
                       />
                     </TouchableOpacity>
@@ -282,20 +306,25 @@ const LabelModal = (props) => {
                 />
 
                 <TouchableOpacity
-                  onPress={() => {
-                    addExistingLabel();
-                    setNewLabel(false);
-                  }}>
+                  onPress={
+                    () => props.postLabel(saveLabel)
+                    // {
+                    //   addExistingLabel();
+                    //   setNewLabel(false);
+                    // }
+                  }
+                >
                   <View
                     style={{
                       padding: 10,
-                      width: '100%',
-                      backgroundColor: '#FFEEE1',
+                      width: "100%",
+                      backgroundColor: "#FFEEE1",
                       borderRadius: 20,
-                      alignItems: 'center',
+                      alignItems: "center",
                       marginTop: 8,
-                    }}>
-                    <Text style={{color: 'orange'}}>Done</Text>
+                    }}
+                  >
+                    <Text style={{ color: "orange" }}>Done</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -310,11 +339,14 @@ const LabelModal = (props) => {
 const mapStateToProps = (state) => ({
   existingLabel: state.newCardReducer.existingLabel,
   selectedLabels: state.newCardReducer.selectedLabels,
+  labelName: state.newCardReducer.labelName,
 });
 
 const mapDispatchToProps = {
   setExistingLabel,
   setSelectedLabels,
+  postLabel,
+  getLabel,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LabelModal);

@@ -1,21 +1,20 @@
 const initialState = {
-  genres: [],
-  movies: [],
-  teams: [],
+  teamName: "",
+  teamList: [],
 };
 
 export const teamReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_GENRES':
+    case "POST_TEAM":
       return {
         ...state,
-        genres: action.payload,
+        teamName: action.teamName,
       };
 
-    case 'SET_TEAM':
+    case "SET_LIST_TEAM":
       return {
         ...state,
-        teams: action.payload,
+        teamList: action.payload,
       };
 
     default:

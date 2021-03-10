@@ -1,33 +1,59 @@
-import {all, takeLatest, put} from 'redux-saga/effects';
-import axios from 'axios';
+import { all, takeLatest, put } from "redux-saga/effects";
+import axios from "axios";
+import { setLabel, setListLabel } from "./newCardAction";
 
-function* getGenresSaga() {
+// function* postCard() {
+//   try {
+//     const body = {
+//       title: action.payload,
+//       desc: action.payload,
+//       selectedMembers: action.payload,
+//       priority: action.payload,
+//       assign: action.payload,
+//       selectedDate: action.payload,
+//       selectedLabels: action.payload,
+//     };
+//     const respond = yield axios.get("whiteboard-team.herokuapp.com/card", body);
+//     console.log(respond);
+//     const allGenres = respond.data.genres;
+//     yield put({ type: "SET_GENRES", payload: allGenres });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+function* postLabelSaga(payload) {
   try {
-    const respond = yield axios.get(
-      'https://api.themoviedb.org/3/genre/movie/list?api_key=781eb13279207d3b00115859616b4710 ',
+    const body = {
+      labelName: payload.labelName,
+    };
+    const respond = yield axios.post(
+      "https://whiteboard-team.herokuapp.com/label",
+      body
     );
     console.log(respond);
-    const allGenres = respond.data.genres;
-    yield put({type: 'SET_GENRES', payload: allGenres});
+    yield put({ type: "GET_LIST_LABEL" });
   } catch (error) {
     console.log(error);
   }
 }
 
-function* getMovies() {
+function* getLabelFromSaga() {
   try {
     const respond = yield axios.get(
-      'https://api.themoviedb.org/3/discover/movie?api_key=781eb13279207d3b00115859616b4710 ',
-      // 'https://movie-review-team-a.herokuapp.com/api/movies',
+      "https://whiteboard-team.herokuapp.com/label "
     );
-    const allMovies = respond.data.results;
-    yield put({type: 'SET_MOVIES', payload: allMovies});
+    console.log(respond);
+    // const labelName = respond.data.labelName;
+    yield put(setListLabel(respond.data.data, true));
   } catch (error) {
     console.log(error);
   }
 }
 
-export function* HomeSaga() {
-  yield takeLatest('FETCH_GENRES', getGenresSaga);
-  yield takeLatest('FETCH_MOVIES', getMovies);
+export function* newCardSagas() {
+  // yield takeLatest("SET_CARD", postCard);
+  yield takeLatest("POST_LABEL", postLabelSaga);
+  yield takeLatest("GET_LIST_LABEL", getLabelFromSaga);
+  // yield takeLatest("GET_LABEL", getLabel);
 }

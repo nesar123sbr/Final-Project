@@ -1,89 +1,115 @@
 const initialState = {
-  desc: '',
+  desc: "",
+  title: "",
   assign: [],
-  priority: '',
-  duedate: '',
-  label: '',
-  comment: '',
+  priority: [],
+  duedate: "",
+  labelName: "",
+  comment: "",
   existingLabel: [],
   selectedLabels: [],
   members: [
     {
       id: 0,
-      title: 'Yosy',
+      title: "Yosy",
     },
     {
       id: 1,
-      title: 'Arga',
+      title: "Arga",
     },
     {
       id: 2,
-      title: 'Dhedy',
+      title: "Dhedy",
     },
     {
       id: 3,
-      title: 'Gada',
+      title: "Gada",
     },
   ],
   selectedMembers: [],
-  priority: [],
-  selectedDate: '',
+  selectedDate: "",
+  openModal: false,
 };
 
 export const newCardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_CARD':
+    case "SET_CARD":
       return {
         ...state,
         desc: action.payload,
-        assign: action.payload,
+        selectedMembers: action.payload,
         priority: action.payload,
-        label: action.payload,
-        duedate: action.payload,
+        assign: action.payload,
+        selectedDate: action.payload,
+        selectedLabels: action.payload,
       };
 
-    case 'SET_COMMENT':
+    case "SET_TITLE":
+      return {
+        ...state,
+        title: action.payload,
+      };
+
+    case "SET_DESCRIPTION":
+      return {
+        ...state,
+        desc: action.payload,
+      };
+
+    case "SET_COMMENT":
       return {
         ...state,
         comment: action.payload,
       };
 
-    case 'SET_EXISTING_LABEL':
+    case "POST_LABEL":
+      return {
+        ...state,
+        labelName: action.payload,
+      };
+
+    case "SET_EXISTING_LABEL":
       return {
         ...state,
         existingLabel: action.payload,
       };
 
-    case 'SET_SELECTED_LABEL':
+    case "SET_SELECTED_LABEL":
       return {
         ...state,
         selectedLabels: action.payload,
-        comment: action.color,
       };
 
-    case 'SET_SELECTED_MEMBER':
+    case "SET_SELECTED_MEMBER":
       return {
         ...state,
         selectedMembers: action.payload,
       };
 
-    case 'SET_MEMBER':
+    case "SET_MEMBER":
       return {
         ...state,
         members: action.payload,
       };
 
-    case 'SET_PRIORITY':
+    case "SET_PRIORITY":
       return {
         ...state,
         priority: action.payload,
       };
-    case 'SET_DATE':
+
+    case "SET_DATE":
       return {
         ...state,
         selectedDate: action.payload,
       };
 
+    case "SET_LIST_LABEL":
+      return {
+        ...state,
+        existingLabel: action.payload,
+        openModal: action.status,
+      };
     default:
       return state;
   }

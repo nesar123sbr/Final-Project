@@ -1,33 +1,46 @@
-import {all, takeLatest, put} from 'redux-saga/effects';
-import axios from 'axios';
+import { all, takeLatest, put } from "redux-saga/effects";
+import axios from "axios";
+import { setListTeam } from "./teamAction";
+import { Store } from "../../../Store/Store";
+import { navigate } from "../../../Shared/Navigation/Nav";
 
-function* getGenresSaga() {
+function* getListTeamSaga() {
   try {
+    const token = Store.getState().LoginReducer.token;
     const respond = yield axios.get(
-      'https://api.themoviedb.org/3/genre/movie/list?api_key=781eb13279207d3b00115859616b4710 ',
+      "https://whiteboard-team.herokuapp.com/api/team",
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     console.log(respond);
-    const allGenres = respond.data.genres;
-    yield put({type: 'SET_GENRES', payload: allGenres});
+    // const labelName = respond.data.labelName;
+    yield put(setListTeam(respond.data.data));
+    yield put(navigate("Team", {}));
   } catch (error) {
     console.log(error);
   }
 }
 
-function* postTeam(payload) {
+function* postTeamSaga(payload) {
+  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+  const token = Store.getState().LoginReducer.token;
   try {
-    const respond = yield axios.get(
-      'https://api.themoviedb.org/3/discover/movie?api_key=781eb13279207d3b00115859616b4710 ',
-      // 'https://movie-review-team-a.herokuapp.com/api/movies',
+    console.log(token);
+    const body = {
+      teamName: payload.teamName,
+    };
+    const respond = yield axios.post(
+      "https://whiteboard-team.herokuapp.com/api/team",
+      body,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
-    const allMovies = respond.data.results;
-    yield put({type: 'SET_MOVIES', payload: allMovies});
+    console.log(respond);
+    yield put({ type: "GET_LIST_TEAM" });
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 }
 
 export function* teamSaga() {
-  yield takeLatest('FETCH_GENRES', getGenresSaga);
-  yield takeLatest('POST_TEAM', postTeam);
+  yield takeLatest("GET_LIST_TEAM", getListTeamSaga);
+  yield takeLatest("POST_TEAM", postTeamSaga);
 }

@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Modal, TouchableOpacity} from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {setPriority} from '../../Redux/newCardAction';
-import {connect} from 'react-redux';
+import React, { useState } from "react";
+import { View, Text, TextInput, Modal, TouchableOpacity } from "react-native";
+import { moderateScale } from "react-native-size-matters";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { setPriority } from "../../Redux/newCardAction";
+import { connect } from "react-redux";
 
 const priorityDummy = [
   {
@@ -13,10 +13,10 @@ const priorityDummy = [
       <Ionicons
         name="arrow-up"
         size={moderateScale(17)}
-        style={{color: '#C03630'}}
+        style={{ color: "#C03630" }}
       />
     ),
-    title: 'Highest',
+    title: "Highest",
     active: true,
   },
   {
@@ -25,10 +25,10 @@ const priorityDummy = [
       <Ionicons
         name="arrow-up"
         size={moderateScale(17)}
-        style={{color: '#FF706A'}}
+        style={{ color: "#FF706A" }}
       />
     ),
-    title: 'High',
+    title: "High",
     active: false,
   },
   {
@@ -37,10 +37,10 @@ const priorityDummy = [
       <Ionicons
         name="arrow-down"
         size={moderateScale(17)}
-        style={{color: '#1A7D5A'}}
+        style={{ color: "#1A7D5A" }}
       />
     ),
-    title: 'Low',
+    title: "Low",
     active: false,
   },
   {
@@ -49,10 +49,10 @@ const priorityDummy = [
       <Ionicons
         name="arrow-down"
         size={moderateScale(17)}
-        style={{color: '#28B446'}}
+        style={{ color: "#28B446" }}
       />
     ),
-    title: 'Lowest',
+    title: "Lowest",
     active: false,
   },
 ];
@@ -64,9 +64,9 @@ const PriorityModal = (props) => {
 
   const choosePriority = (id, status) => {
     const activeTmp = prioritySelect.find((value) => value.active);
-    const isNotActive = {...activeTmp, active: false};
+    const isNotActive = { ...activeTmp, active: false };
     const getClick = prioritySelect.find((value) => value.id === id);
-    const setActive = {...getClick, active: true};
+    const setActive = { ...getClick, active: true };
     priorityDummy[isNotActive.id] = isNotActive;
     priorityDummy[id] = setActive;
     setPriority(priorityDummy);
@@ -78,15 +78,16 @@ const PriorityModal = (props) => {
       <View
         style={{
           height: 500,
-          width: '100%',
-          backgroundColor: 'white',
+          width: "100%",
+          backgroundColor: "white",
           borderRadius: 20,
           opacity: 1,
           marginTop: 330,
-          alignSelf: 'center',
-        }}>
-        <Text style={{margin: 20, marginTop: 40}}>Priority</Text>
-        <Text style={{color: 'gray', margin: 20, marginTop: 5}}>
+          alignSelf: "center",
+        }}
+      >
+        <Text style={{ margin: 20, marginTop: 40 }}>Priority</Text>
+        <Text style={{ color: "gray", margin: 20, marginTop: 5 }}>
           Select an option
         </Text>
 
@@ -97,14 +98,15 @@ const PriorityModal = (props) => {
                 onPress={() => choosePriority(value.id, value.active)}
                 key={value.id.toString()}
                 style={{
-                  flexDirection: 'row',
+                  flexDirection: "row",
                   paddingHorizontal: moderateScale(8),
                   paddingVertical: moderateScale(8),
                   marginBottom: moderateScale(10),
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{flexDirection: 'row'}}>
-                  <View style={{minWidth: moderateScale(40)}}>
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{ minWidth: moderateScale(40) }}>
                     {value.icon()}
                   </View>
                   <Text>{value.title}</Text>
@@ -120,90 +122,6 @@ const PriorityModal = (props) => {
             );
           })}
         </View>
-        {/* 
-        <TouchableOpacity onPress={() => setAddPriority(false)}>
-          <View
-            style={{
-              padding: 20,
-              width: '100%',
-              borderRadius: 20,
-              alignItems: 'center',
-              marginTop: 8,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <Ionicons
-                name="arrow-up"
-                size={moderateScale(17)}
-                style={{color: '#C03630'}}
-              />
-              <Text style={{paddingLeft: 5}}>Highest</Text>
-            </View>
-            <View>
-              <AntDesign
-                name="checkcircle"
-                size={moderateScale(20)}
-                style={{color: '#5ED6BA'}}
-              />
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setAddPriority(false)}>
-          <View
-            style={{
-              padding: 20,
-              width: '100%',
-              borderRadius: 20,
-              alignItems: 'center',
-              marginTop: 8,
-              flexDirection: 'row',
-            }}>
-            <Ionicons
-              name="arrow-up"
-              size={moderateScale(17)}
-              style={{color: '#FF706A'}}
-            />
-            <Text style={{paddingLeft: 5}}>High</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setAddPriority(false)}>
-          <View
-            style={{
-              padding: 20,
-              width: '100%',
-              borderRadius: 20,
-              alignItems: 'center',
-              marginTop: 8,
-              flexDirection: 'row',
-            }}>
-            <Ionicons
-              name="arrow-down"
-              size={moderateScale(17)}
-              style={{color: '#1A7D5A'}}
-            />
-            <Text style={{paddingLeft: 5}}>Low</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setAddPriority(false)}>
-          <View
-            style={{
-              padding: 20,
-              width: '100%',
-              borderRadius: 20,
-              alignItems: 'center',
-              marginTop: 8,
-              flexDirection: 'row',
-            }}>
-            <Ionicons
-              name="arrow-down"
-              size={moderateScale(17)}
-              style={{color: '#28B446'}}
-            />
-            <Text style={{paddingLeft: 5}}>Lowest</Text>
-          </View>
-        </TouchableOpacity> */}
       </View>
     </>
   );

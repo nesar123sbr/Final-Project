@@ -5,7 +5,14 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Image,
+  Platform,
+  PermissionsAndroid
 } from "react-native";
+// import {
+//   launchCamera,
+//   launchImageLibrary
+// } from 'react-native-image-picker';
 import Lonceng from "react-native-vector-icons/FontAwesome";
 import PanahKanan from "react-native-vector-icons/MaterialCommunityIcons";
 import {
@@ -26,10 +33,127 @@ function Profile(props) {
   const [addRole, setAddRole] = useState(props.role);
   const [addIndustry, setAddIndustry] = useState(props.industry);
   const [addCompany, setCompany] = useState(props.company_name);
+  // const [filePath, setFilePath] = useState({});
+
+  // const requestCameraPermission = async () => {
+  //   if (Platform.OS === 'android') {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.CAMERA,
+  //         {
+  //           title: 'Camera Permission',
+  //           message: 'App needs camera permission',
+  //         },
+  //       );
+  //       // If CAMERA Permission is granted
+  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
+  //     } catch (err) {
+  //       console.warn(err);
+  //       return false;
+  //     }
+  //   } else return true;
+  // };
+
+  // const requestExternalWritePermission = async () => {
+  //   if (Platform.OS === 'android') {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  //         {
+  //           title: 'External Storage Write Permission',
+  //           message: 'App needs write permission',
+  //         },
+  //       );
+  //       // If WRITE_EXTERNAL_STORAGE Permission is granted
+  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
+  //     } catch (err) {
+  //       console.warn(err);
+  //       alert('Write permission err', err);
+  //     }
+  //     return false;
+  //   } else return true;
+  // };
+
+  // const captureImage = async (type) => {
+  //   let options = {
+  //     mediaType: type,
+  //     maxWidth: 300,
+  //     maxHeight: 550,
+  //     quality: 1,
+  //     // videoQuality: 'low',
+  //     // durationLimit: 30, //Video max duration in seconds
+  //     saveToPhotos: true,
+  //   };
+  //   let isCameraPermitted = await requestCameraPermission();
+  //   let isStoragePermitted = await requestExternalWritePermission();
+  //   if (isCameraPermitted && isStoragePermitted) {
+  //     launchCamera(options, (response) => {
+  //       console.log('Response = ', response);
+
+  //       if (response.didCancel) {
+  //         alert('User cancelled camera picker');
+  //         return;
+  //       } else if (response.errorCode == 'camera_unavailable') {
+  //         alert('Camera not available on device');
+  //         return;
+  //       } else if (response.errorCode == 'permission') {
+  //         alert('Permission not satisfied');
+  //         return;
+  //       } else if (response.errorCode == 'others') {
+  //         alert(response.errorMessage);
+  //         return;
+  //       }
+  //       console.log('base64 -> ', response.base64);
+  //       console.log('uri -> ', response.uri);
+  //       console.log('width -> ', response.width);
+  //       console.log('height -> ', response.height);
+  //       console.log('fileSize -> ', response.fileSize);
+  //       console.log('type -> ', response.type);
+  //       console.log('fileName -> ', response.fileName);
+  //       setFilePath(response);
+  //     });
+  //   }
+  // };
+
+  // const chooseFile = (type) => {
+  //   let options = {
+  //     mediaType: type,
+  //     maxWidth: 300,
+  //     maxHeight: 550,
+  //     quality: 1,
+  //   };
+  //   launchImageLibrary(options, (response) => {
+  //     console.log('Response = ', response);
+
+  //     if (response.didCancel) {
+  //       alert('User cancelled camera picker');
+  //       return;
+  //     } else if (response.errorCode == 'camera_unavailable') {
+  //       alert('Camera not available on device');
+  //       return;
+  //     } else if (response.errorCode == 'permission') {
+  //       alert('Permission not satisfied');
+  //       return;
+  //     } else if (response.errorCode == 'others') {
+  //       alert(response.errorMessage);
+  //       return;
+  //     }
+  //     console.log('base64 -> ', response.base64);
+  //     console.log('uri -> ', response.uri);
+  //     console.log('width -> ', response.width);
+  //     console.log('height -> ', response.height);
+  //     console.log('fileSize -> ', response.fileSize);
+  //     console.log('type -> ', response.type);
+  //     console.log('fileName -> ', response.fileName);
+  //     setFilePath(response);
+  //   });
+  // };
+
+
+
 
   const changeInName = (text) => {
     setAddName(text);
-    
   };
   const changeInRole = (item) => {
     setAddRole(item);
@@ -46,16 +170,15 @@ function Profile(props) {
 
   useEffect(() => {
     props.getProfile();
-    setAddName(props.name)
-    setAddRole(props.role)
-    setAddIndustry(props.industry)
-    setCompany(props.company_name)
-
+    setAddName(props.name);
+    setAddRole(props.role);
+    setAddIndustry(props.industry);
+    setCompany(props.company_name);
   }, [props]);
   const logOut = () => {
-    props.logOut();
-    props.removeCredential();
     navigation.navigate("StackNav");
+    props.logOut();
+    // props.removeCredential();
   };
   return (
     <View style={{ height: "100%", width: "100%" }}>
@@ -95,20 +218,29 @@ function Profile(props) {
           </View>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text
+          <View
             style={{
-              borderRadius: 100 / 2,
-              backgroundColor: "green",
+              borderRadius: 80,
+              backgroundColor: "#1A7D5A",
               color: "white",
-              fontSize: moderateScale(50),
-              width: 80,
-              height: 80,
-              textAlign: "center",
+              width: moderateScale(80),
+              height: moderateScale(80),
+              justifyContent: "center",
+              alignItems: "center",
               marginTop: moderateScale(10),
             }}
           >
-            {props.name[0]}
-          </Text>
+            <Text
+              style={{
+                fontSize: moderateScale(40),
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              {props.name[0]}
+            </Text>
+          </View>
+
           <Text
             style={{
               color: "grey",
@@ -118,6 +250,14 @@ function Profile(props) {
           >
             YOUR PHOTO
           </Text>
+          {/* <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonStyle}
+          onPress={() => captureImage('photo')}>
+          <Text style={styles.textStyle}>
+            Launch Camera for Image
+          </Text>
+        </TouchableOpacity> */}
         </View>
         <View
           style={{
@@ -217,11 +357,21 @@ function Profile(props) {
           Role
         </Text>
         <DropDownPicker
-          items={[{label:"Employee",value:"Employee"}, {label:"Director",value:"Director"}, {label:"Manager",value:"Manager"}, {label:"Supervisor",value:"Supervisor"}, {label:"Owner",value:"Owner"}]}
-          defaultValue={addRole}
-          style={{paddingVertical: 10}}
-          containerStyle={{width:moderateScale(343), height:moderateScale(40) ,borderRadius:4}}
-          onChangeItem={item => changeInRole(item.value)}
+          items={[
+            { label: "employee", value: "Employee" },
+            { label: "director", value: "Director" },
+            { label: "manager", value: "Manager" },
+            { label: "supervisor", value: "Supervisor" },
+            { label: "owner", value: "Owner" },
+          ]}
+          defaultValue={props.role.length ? addRole : ""}
+          style={{ paddingVertical: 10 }}
+          containerStyle={{
+            width: moderateScale(343),
+            height: moderateScale(40),
+            borderRadius: 4,
+          }}
+          onChangeItem={(item) => changeInRole(item.value)}
         />
 
         <Text
@@ -238,20 +388,24 @@ function Profile(props) {
         <View>
           <DropDownPicker
             items={[
-              {label:"education",value:"Education"},
-              {label:"food&beverages",value:"Food&Beverages"},
-              {label:"health services",value:"Health services"},
-              {label:"tourism",value:"Tourism"},
-              {label:"transportation",value:"Transportation"},
-              {label:"public services",value:"Public Services"},
-              {label:"telecomunications",value:"Telecomunications"},
-              {label:"agliculture",value:"Agliculture"},
-              {label:"others",value:"Others"},
+              { label: "education", value: "Education" },
+              { label: "food&beverages", value: "Food&Beverages" },
+              { label: "health services", value: "Health services" },
+              { label: "tourism", value: "Tourism" },
+              { label: "transportation", value: "Transportation" },
+              { label: "public services", value: "Public Services" },
+              { label: "telecomunications", value: "Telecomunications" },
+              { label: "agliculture", value: "Agliculture" },
+              { label: "others", value: "Others" },
             ]}
-            defaultValue={addIndustry}
-            style={{paddingVertical: 10}}
-            containerStyle={{width:moderateScale(343), height:moderateScale(40) ,borderRadius:4}}
-            onChangeItem={item => changeInIndustry(item.value)}
+            defaultValue={props.industry.length ? addIndustry : ""}
+            style={{ paddingVertical: 10 }}
+            containerStyle={{
+              width: moderateScale(343),
+              height: moderateScale(40),
+              borderRadius: 4,
+            }}
+            onChangeItem={(item) => changeInIndustry(item.value)}
           />
         </View>
 

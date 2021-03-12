@@ -1,38 +1,14 @@
-import React, { useState } from "react";
-import {
-  View,
-  FlatList,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, FlatList, StatusBar, TouchableOpacity } from "react-native";
 import Nunito from "../../Shared/Component/Nunito";
 import { moderateScale } from "react-native-size-matters";
 import CardBoard from "../../Shared/Component/Card/CardBoard";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { getListTeams } from "./Redux/Action";
 import { getListTeam } from "../TeamPage/Redux/teamAction";
 
-// cardTitle1, cardTitle2, progress,onPress,countTask
-const fromAPI = [
-  {
-    title: "idev abal2",
-  },
-  {
-    title: "e-project abal2",
-  },
-  {
-    title: "e-idev abal2",
-  },
-];
-const dummytitle = fromAPI.map((value, index) => {
-  return {
-    index: index,
-    title: value.title,
-    expanded: true,
-  };
-});
 const dataFromDummyAPI = [
   {
     cardTitle1: "idev internal23",
@@ -58,17 +34,26 @@ const dataFromDummyAPI = [
 
 function Landing(props) {
   const { navigation } = props;
-  const [data, setData] = useState(dummytitle);
+  props.ListTeam.map((value, index) => {
+    return {
+      index: index,
+      teamName: value.teamName,
+      expanded: true,
+    };
+  });
+  const [data, setData] = useState(props.ListTeam);
   const [even, setEven] = useState(true);
+  useEffect(() => {
+    props.getListTeams();
+  }, []);
 
   const setFuncCollaps = (index) => {
     const currentData = data[index];
     const newData = { ...currentData, expanded: !currentData.expanded };
-    dummytitle[index] = newData;
-    setData(dummytitle);
+    props.ListTeam[index] = newData;
+    setData(props.ListTeam);
     setEven(!even);
   };
-  // console.log(data2)
 
   const renderTitle = ({ item, index }) => {
     const ItemSeparatorView = () => {
@@ -85,13 +70,9 @@ function Landing(props) {
       <View style={{ backgroundColor: "white" }}>
         <StatusBar
           barStyle="light-content"
-          // dark-content, light-content and default
           hidden={false}
-          //To hide statusBar
           backgroundColor="#4859EF"
-          //Background color of statusBar only works for Android
           translucent={false}
-          //allowing light, but not detailed shapes
           networkActivityIndicatorVisible={true}
         />
         <View
@@ -110,24 +91,26 @@ function Landing(props) {
               marginBottom: moderateScale(10),
             }}
           >
-            <Nunito
-              title={item.title}
-              type="SemiBold"
-              size={moderateScale(15)}
-              color="black"
-            />
             <TouchableOpacity
-              style={{ paddingLeft: moderateScale(5) }}
+              style={{ paddingRight: moderateScale(10) }}
               onPress={() => setFuncCollaps(index)}
             >
               <MaterialCommunityIcons
                 name={
                   item.expanded
-                    ? "arrow-up-drop-circle"
-                    : "arrow-down-drop-circle"
+                    ? "arrow-down-drop-circle"
+                    : "arrow-up-drop-circle"
                 }
                 size={moderateScale(25)}
                 color="#80848D"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Nunito
+                title={item.teamName}
+                type="SemiBold"
+                size={moderateScale(15)}
+                color="black"
               />
             </TouchableOpacity>
           </View>
@@ -163,7 +146,7 @@ function Landing(props) {
     );
   };
   return (
-    <View style={{ paddingBottom: hp(10) }}>
+    <View style={{ paddingBottom: hp(10), backgroundColor: "white" }}>
       <View
         style={{
           flexDirection: "row",
@@ -176,7 +159,8 @@ function Landing(props) {
         }}
       >
         <Nunito title="Boards" type="SemiBold" size={moderateScale(28)} />
-        <TouchableOpacity onPress={() => navigation.navigate("Team")}>
+
+        <TouchableOpacity onPress={() => props.getListTeam()}>
           <Nunito
             title="TEAM "
             type="SemiBold"
@@ -187,16 +171,19 @@ function Landing(props) {
       </View>
 
       <FlatList
-        data={data}
+        data={props.ListTeam}
         renderItem={(item) => renderTitle(item)}
-        keyExtractor={(item, index) => item.title}
+        keyExtractor={(item, index) => item._id}
       />
     </View>
   );
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  ListTeam: state.LandingReducer.ListTeam,
+});
 
 const mapDispatchToProps = {
+  getListTeams,
   getListTeam,
 };
 

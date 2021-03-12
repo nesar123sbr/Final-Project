@@ -27,8 +27,8 @@ export const patchEmail =(email) => {
     email
   }
 }
-export const removeCredential =() => {
-  return {
-      type:"SET_OUT_PROFILE"
-  }
-}
+// export const removeCredential =() => {
+//   return {
+//       type:"SET_OUT_PROFILE"
+//   }
+// }

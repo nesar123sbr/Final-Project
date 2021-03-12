@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
+import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
 
 export const TeamStyle = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
-    marginBottom: 30,
+    padding:moderateScale(16)
   },
   teamName: {
     flexDirection: 'row',
@@ -13,7 +13,7 @@ export const TeamStyle = StyleSheet.create({
     backgroundColor: '#e6e3e3',
     padding: 10,
     borderRadius: 10,
-    width: 370,
+    width: "100%",
     alignSelf: 'center',
   },
 });

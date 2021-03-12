@@ -17,15 +17,15 @@ export const ProfileReducer = (state = intialState, action) => {
         industry: action.industry,
         company_name: action.company_name,
       };
-      case "SET_OUT_PROFILE":
-      return {
-        ...state,
-        name: "",
-        email: "",
-        role: "",
-        industry: "",
-        company_name: "",
-      };
+      // case "SET_OUT_PROFILE":
+      // return {
+      //   ...state,
+      //   name: "",
+      //   email: "",
+      //   role: "",
+      //   industry: "",
+      //   company_name: "",
+      // };
 
     default:
       return state;

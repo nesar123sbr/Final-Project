@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
-index 97c232e..f510cae 100644
+index 97c232e..cf86608 100644
 --- a/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 +++ b/node_modules/react-native-draganddrop-board/src/components/Column/Column.js
 @@ -1,5 +1,5 @@
@@ -87,7 +87,7 @@ index 97c232e..f510cae 100644
          }
 +        <View style={{justifyContent:'center',alignItems:'center',marginBottom:10}}>
 +        <TouchableOpacity onPress={() => this.props.AddNewCard(column.data().name)}>
-+          <Text style={{fontFamily:'Nunito-Light',fontSize:14}}>+ Add New Card</Text>
++          <Text style={{fontSize:14}}>+ Add New Card</Text>
 +        </TouchableOpacity>
 +        </View>
        </ColumnWrapper>
@@ -126,3 +126,16 @@ index fc0f198..613f2ba 100644
  `
  
  export {
+diff --git a/node_modules/react-native-draganddrop-board/src/constants/colors.js b/node_modules/react-native-draganddrop-board/src/constants/colors.js
+index 0a9ccd6..f9e53ac 100644
+--- a/node_modules/react-native-draganddrop-board/src/constants/colors.js
++++ b/node_modules/react-native-draganddrop-board/src/constants/colors.js
+@@ -2,7 +2,7 @@ const colors = {
+   bay: '#747d8c',
+   black: '#000000',
+   blurple: '#4834d4',
+-  deepComaru: '#30336b',
++  deepComaru: 'white',
+   exodusFruit: '#686de0',
+   fallingStar: '#FAFAFA',
+   officer: '#2C3A47',

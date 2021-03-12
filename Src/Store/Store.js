@@ -5,19 +5,11 @@ import { AllReducer } from "./CombineReducer";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { SagaWatcher } from "./SagaWatcher";
-<<<<<<< HEAD
-=======
-import { ProfileReducer } from "../Features/ProfilePage/Redux/Reducer";
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 
 const persistConfig = {
   key: "papanputih",
   storage: AsyncStorage,
-<<<<<<< HEAD
   blacklist: ["TeamBoardReducer"],
-=======
-  blacklist: [],
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 };
 
 const SagaMiddleware = createSagaMiddleware();

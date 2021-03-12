@@ -1,11 +1,12 @@
-export const fetchTask = () => {
+export const getListTask = () => {
   return {
-    type: 'FETCH_TASK',
+    type: "GET_LIST_TASK",
   };
 };
 
-export const listMovies = () => {
+export const setListTask = (data) => {
   return {
-    type: 'FETCH_MOVIES',
+    type: "SET_LIST_TASK",
+    data,
   };
 };

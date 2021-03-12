@@ -15,16 +15,14 @@ import { connect } from "react-redux";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { moderateScale } from "react-native-size-matters";
 import { NewcardStyle } from "../style";
-import { getListLabel } from "../Redux/newCardAction";
+import { getListLabel, setDate, setPriority } from "../Redux/newCardAction";
 
 const AllModals = (props) => {
   const [addMember, setAddMember] = useState(false);
   const [addDate, setAddDate] = useState(false);
   const [addPriority, setAddPriority] = useState(false);
   const [addLabel, setAddLabel] = useState(false);
-  const [openLabel, setOpenLabel] = useState(false);
   const [addOptions, setAddOptions] = useState(false);
-  const [addList, setAddList] = useState("");
 
   useEffect(() => {
     props.getListLabel();
@@ -91,24 +89,21 @@ const AllModals = (props) => {
               maxWidth: moderateScale(245),
             }}
           >
-            {props.priority.length ? (
-              props.priority.map((value) => {
-                return (
-                  <View
-                    key={value.id.toString()}
-                    style={NewcardStyle.buttonContainer}
-                  >
-                    <View style={{ minWidth: moderateScale(40) }}>
-                      {value.icon()}
-                    </View>
-                    <Text>{value.title}</Text>
-                  </View>
-                );
-              })
+            {props.priority.icon ? (
+              <View
+                key={props.priority?.id.toString()}
+                style={NewcardStyle.buttonContainer}
+              >
+                <View style={{ minWidth: moderateScale(40) }}>
+                  {props.priority.icon()}
+                </View>
+                <Text>{props.priority?.title}</Text>
+              </View>
             ) : (
               <Text style={{ color: "gray" }}>Choose Priority</Text>
             )}
-            {props.priority.length ? (
+
+            {props.priority ? (
               <TouchableOpacity
                 onPress={() => setAddPriority(true)}
                 style={{
@@ -124,8 +119,34 @@ const AllModals = (props) => {
         <TouchableOpacity
           style={{ marginBottom: 20 }}
           onPress={() => setAddDate(true)}
+          disabled={props.selectedDate.length ? true : false}
         >
-          <Text style={{ color: "gray" }}>Choose Date</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              maxWidth: moderateScale(245),
+            }}
+          >
+            {props.selectedDate ? (
+              <View style={NewcardStyle.buttonContainer}>
+                <View style={{ minWidth: moderateScale(40) }}>
+                  <Text>{props.selectedDate}</Text>
+                </View>
+              </View>
+            ) : (
+              <Text style={{ color: "gray" }}>Choose Date</Text>
+            )}
+            {props.selectedDate.length ? (
+              <TouchableOpacity
+                onPress={() => setAddPriority(true)}
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></TouchableOpacity>
+            ) : null}
+          </View>
         </TouchableOpacity>
 
         {/* LABELS */}
@@ -144,13 +165,16 @@ const AllModals = (props) => {
             }}
           >
             {props.selectedLabels.length ? (
-              props.selectedLabels.map((value) => {
+              props.selectedLabels.map((value, index) => {
                 return (
                   <View
-                    key={value.id.toString()}
-                    style={NewcardStyle.buttonContainer}
+                    key={index.toString()}
+                    style={[
+                      NewcardStyle.buttonContainer,
+                      { backgroundColor: value.color, borderRadius: 5 },
+                    ]}
                   >
-                    <Text>{value.title}</Text>
+                    <Text>{value.labelName}</Text>
                   </View>
                 );
               })
@@ -247,8 +271,8 @@ const AllModals = (props) => {
 
 const mapStateToProps = (state) => ({
   selectedLabels: state.newCardReducer.selectedLabels,
-  priority: state.newCardReducer.priority,
   selectedMembers: state.newCardReducer.selectedMembers,
+  priority: state.newCardReducer.priority,
   selectedDate: state.newCardReducer.selectedDate,
   existingLabel: state.newCardReducer.existingLabel,
   openModal: state.newCardReducer.openModal,
@@ -256,6 +280,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getListLabel,
+  setDate,
+  setPriority,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllModals);

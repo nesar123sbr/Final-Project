@@ -12,10 +12,7 @@ import CardBoard from "../../Shared/Component/Card/CardBoard";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-<<<<<<< HEAD
 import { getListTeam } from "../TeamPage/Redux/teamAction";
-=======
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 
 // cardTitle1, cardTitle2, progress,onPress,countTask
 const fromAPI = [
@@ -126,13 +123,8 @@ function Landing(props) {
               <MaterialCommunityIcons
                 name={
                   item.expanded
-<<<<<<< HEAD
                     ? "arrow-up-drop-circle"
                     : "arrow-down-drop-circle"
-=======
-                    ? "arrow-down-drop-circle"
-                    : "arrow-up-drop-circle"
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
                 }
                 size={moderateScale(25)}
                 color="#80848D"
@@ -171,11 +163,7 @@ function Landing(props) {
     );
   };
   return (
-<<<<<<< HEAD
     <View style={{ paddingBottom: hp(10) }}>
-=======
-    <View style={{ paddingBottom: hp(10),backgroundColor: "white" }}>
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
       <View
         style={{
           flexDirection: "row",
@@ -188,12 +176,7 @@ function Landing(props) {
         }}
       >
         <Nunito title="Boards" type="SemiBold" size={moderateScale(28)} />
-<<<<<<< HEAD
-
-        <TouchableOpacity onPress={() => props.getListTeam()}>
-=======
         <TouchableOpacity onPress={() => navigation.navigate("Team")}>
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
           <Nunito
             title="TEAM "
             type="SemiBold"
@@ -213,12 +196,8 @@ function Landing(props) {
 }
 const mapStateToProps = (state) => ({});
 
-<<<<<<< HEAD
 const mapDispatchToProps = {
   getListTeam,
 };
-=======
-const mapDispatchToProps = {};
->>>>>>> 0836c2e6432f28d81246e3ea47dc391ae143faeb
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

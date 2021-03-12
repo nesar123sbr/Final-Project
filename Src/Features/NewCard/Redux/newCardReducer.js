@@ -3,7 +3,6 @@ const initialState = {
   title: "",
   assign: [],
   priority: [],
-  duedate: "",
   labelName: "",
   comment: "",
   existingLabel: [],
@@ -36,24 +35,25 @@ export const newCardReducer = (state = initialState, action) => {
     case "SET_CARD":
       return {
         ...state,
-        desc: action.payload,
-        selectedMembers: action.payload,
-        priority: action.payload,
-        assign: action.payload,
-        selectedDate: action.payload,
-        selectedLabels: action.payload,
+        title: action.title,
+        desc: action.desc,
+        priority: action.priority,
+        selectedDate: action.selectedDate,
+        // selectedMembers: action.payload,
+        // assign: action.payload,
+        // selectedLabels: action.payload,
       };
 
     case "SET_TITLE":
       return {
         ...state,
-        title: action.payload,
+        title: action.data,
       };
 
-    case "SET_DESCRIPTION":
+    case "SET_DESC":
       return {
         ...state,
-        desc: action.payload,
+        desc: action.data,
       };
 
     case "SET_COMMENT":

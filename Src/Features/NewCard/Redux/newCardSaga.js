@@ -9,18 +9,35 @@ import { setLabel, setListLabel } from "./newCardAction";
 //       desc: action.payload,
 //       selectedMembers: action.payload,
 //       priority: action.payload,
-//       assign: action.payload,
 //       selectedDate: action.payload,
 //       selectedLabels: action.payload,
 //     };
-//     const respond = yield axios.get("whiteboard-team.herokuapp.com/card", body);
+//     const respond = yield axios.post("whiteboard-team.herokuapp.com/card", body);
 //     console.log(respond);
-//     const allGenres = respond.data.genres;
 //     yield put({ type: "SET_GENRES", payload: allGenres });
 //   } catch (error) {
 //     console.log(error);
 //   }
 // }
+
+function* postCardSaga(payload) {
+  try {
+    const body = {
+      title: payload.title,
+      desc: payload.desc,
+      priority: payload.priority,
+      dueDate: payload.selectedDate,
+    };
+    console.log(body, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    const respond = yield axios.post(
+      "https://whiteboard-team.herokuapp.com/card",
+      body
+    );
+    console.log(respond);
+  } catch (error) {
+    console.log(error.response);
+  }
+}
 
 function* postLabelSaga(payload) {
   try {
@@ -55,5 +72,6 @@ export function* newCardSagas() {
   // yield takeLatest("SET_CARD", postCard);
   yield takeLatest("POST_LABEL", postLabelSaga);
   yield takeLatest("GET_LIST_LABEL", getLabelFromSaga);
+  yield takeLatest("POST_CARD", postCardSaga);
   // yield takeLatest("GET_LABEL", getLabel);
 }

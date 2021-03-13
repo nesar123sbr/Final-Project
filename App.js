@@ -10,11 +10,7 @@ import AnimatedSplash from "react-native-animated-splash-screen";
 import { navigationRef } from "./Src/Shared/Navigation/Nav";
 import Newcard from "./Src/Features/NewCard/Newcard";
 import Team from "./Src/Features/TeamPage/Team";
-<<<<<<< HEAD
 import ModalPhoto from "./Src/Shared/Component/Modal/ModalPhoto"
-=======
-import Task from "./Src/Features/TaskPage/Task";
->>>>>>> cd17258ae8482bc4d41d370312359a9887060212
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -38,13 +34,8 @@ const App = () => {
           >
             <Team />
             {/* <Newcard /> */}
-<<<<<<< HEAD
             <Navigator />
             {/* <ModalPhoto/> */}
-=======
-            {/* <Navigator /> */}
-            {/* <Task /> */}
->>>>>>> cd17258ae8482bc4d41d370312359a9887060212
           </AnimatedSplash>
         </NavigationContainer>
       </PersistGate>

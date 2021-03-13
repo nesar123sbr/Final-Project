@@ -27,6 +27,7 @@ function* postCardSaga(payload) {
       desc: payload.desc,
       priority: payload.priority,
       dueDate: payload.selectedDate,
+      labelId: payload.labelId,
     };
     console.log(body, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     const respond = yield axios.post(

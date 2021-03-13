@@ -6,6 +6,7 @@ import { TeamBoardReducer } from "../Features/TeamBoard/Redux/Reducer";
 import { newCardReducer } from "../Features/NewCard/Redux/newCardReducer";
 import { teamReducer } from "../Features/TeamPage/Redux/teamReducer";
 import { taskReducer } from "../Features/TaskPage/Redux/taskReducer";
+import { LandingReducer } from "../Features/LandingPage/Redux/Reducer";
 
 export const AllReducer = combineReducers({
   LoginReducer,
@@ -15,4 +16,5 @@ export const AllReducer = combineReducers({
   newCardReducer,
   teamReducer,
   taskReducer,
+  LandingReducer,
 });

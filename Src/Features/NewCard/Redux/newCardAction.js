@@ -8,13 +8,14 @@ export const setCard = (desc, title, priority, selectedDate) => {
   };
 };
 
-export const postCard = (desc, title, priority, selectedDate) => {
+export const postCard = (desc, title, priority, selectedDate, labelId) => {
   return {
     type: "POST_CARD",
     desc,
     title,
     priority,
     selectedDate,
+    labelId,
   };
 };
 
@@ -99,6 +100,13 @@ export const setDesc = (data) => {
 export const setTitle = (data) => {
   return {
     type: "SET_TITLE",
+    data,
+  };
+};
+
+export const setLabelid = (data) => {
+  return {
+    type: "SET_LABEL_ID",
     data,
   };
 };

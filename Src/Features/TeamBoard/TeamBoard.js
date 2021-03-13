@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { View, FlatList, Text } from "react-native";
-=======
 import { View, FlatList, Alert, ScrollView } from "react-native";
->>>>>>> fb9d6d0b99f29d3af2cde005f09a97437c023724
 import HeaderTeam from "../../Shared/Component/Header/HeaderTeam";
 import CardTeam from "../../Shared/Component/Card/CardTeam";
 import CardEmptyTeam from "../../Shared/Component/EmptyCard/CardEmptyTeam";
@@ -45,7 +41,6 @@ function TeamBoard(props) {
         onPress={() => navigation.navigate("Boards")}
         title1="Meja Putih"
       />
-
 
       {!props.listCardTeam ? (
         <EmptyTeamBoard onTap={() => setShowModal(true)} />

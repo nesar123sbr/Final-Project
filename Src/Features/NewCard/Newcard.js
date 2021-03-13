@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { moderateScale } from "react-native-size-matters";
 import { NewcardStyle } from "./style";
@@ -14,7 +20,7 @@ const Newcard = (props) => {
   return (
     <>
       <HeaderDesc />
-      <View style={{ margin: 10 }}>
+      <ScrollView style={{ margin: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text>New Card Screen</Text>
           <TouchableOpacity onPress={() => setAddOptions(true)}>
@@ -34,13 +40,6 @@ const Newcard = (props) => {
           onChangeText={(text) => props.setDesc(text)}
         />
         <View style={{ flexDirection: "row", marginTop: 30 }}>
-          <View style={{ marginRight: 50 }}>
-            <Text style={{ marginBottom: 20 }}>Assign To</Text>
-            <Text style={{ marginBottom: 20 }}>Priority</Text>
-            <Text style={{ marginBottom: 20 }}>Due Date</Text>
-            <Text style={{ marginBottom: 20 }}>Labels</Text>
-          </View>
-
           <AllModals />
         </View>
         <Text style={{ marginBottom: 10 }}>Comments</Text>
@@ -75,7 +74,7 @@ const Newcard = (props) => {
             consectetur adipiscing.
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };

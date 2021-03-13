@@ -20,18 +20,6 @@ import { connect } from "react-redux";
 import { postTeam, getListTeam } from "./Redux/teamAction";
 import { getListTeams } from "../LandingPage/Redux/Action";
 
-// const getRandomColor = () => {
-//   return (
-//     'rgb(' +
-//     Math.floor(Math.random() * 256) +
-//     ',' +
-//     Math.floor(Math.random() * 256) +
-//     ',' +
-//     Math.floor(Math.random() * 256) +
-//     ')'
-//   );
-// };
-
 const Team = (props) => {
   const { navigation } = props;
   // const [randomColor, setRandomColor] = useState(getRandomColor());
@@ -121,7 +109,7 @@ const Team = (props) => {
   };
   return (
     <>
-      <View style={{backgroundColor: "white",height:"100%",width:"100%"}}>
+      <View style={{ backgroundColor: "white", height: "100%", width: "100%" }}>
         <View>
           <View
             style={{
@@ -130,7 +118,6 @@ const Team = (props) => {
               justifyContent: "space-between",
               paddingVertical: moderateScale(16),
               paddingHorizontal: moderateScale(16),
-              
             }}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -145,7 +132,7 @@ const Team = (props) => {
               <Text style={{ fontSize: 20, marginLeft: 10 }}>Teams</Text>
             </View>
             <TouchableOpacity onPress={() => setAddTeam(true)}>
-              <Text style={{color:"blue"}}>+ NEW TEAM</Text>
+              <Text style={{ color: "blue" }}>+ NEW TEAM</Text>
             </TouchableOpacity>
           </View>
         </View>

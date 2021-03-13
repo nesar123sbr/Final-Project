@@ -19,14 +19,16 @@ const Header = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            const labelId = props.labelId.map((value) => value._id);
             props.postCard(
               props.desc,
               props.title,
               props.priority.id + 1,
-              props.selectedDate
-            )
-          }
+              props.selectedDate,
+              labelId
+            );
+          }}
         >
           <View
             style={{ flexDirection: "row", paddingRight: moderateScale(10) }}
@@ -84,6 +86,7 @@ const mapStateToProps = (state) => ({
   title: state.newCardReducer.title,
   priority: state.newCardReducer.priority,
   selectedDate: state.newCardReducer.selectedDate,
+  labelId: state.newCardReducer.labelId,
 });
 
 const mapDispatchToProps = {

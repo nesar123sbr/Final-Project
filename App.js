@@ -10,6 +10,7 @@ import AnimatedSplash from "react-native-animated-splash-screen";
 import { navigationRef } from "./Src/Shared/Navigation/Nav";
 import Newcard from "./Src/Features/NewCard/Newcard";
 import Team from "./Src/Features/TeamPage/Team";
+import Task from "./Src/Features/TaskPage/Task";
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,9 +32,10 @@ const App = () => {
             backgroundColor={"#37266C"}
             logoImage={require("./Src/Assets/Logo/Union.png")}
           >
-            {/* <Team /> */}
+            <Team />
             {/* <Newcard /> */}
-            <Navigator />
+            {/* <Navigator /> */}
+            {/* <Task /> */}
           </AnimatedSplash>
         </NavigationContainer>
       </PersistGate>

@@ -44,12 +44,12 @@ const LabelModal = (props) => {
     };
 
     const findExistingLabel = props.existingLabel.find(
-      (value) => value.title === saveLabel && value.color === saveColor
+      (value) => value.labelName === saveLabel && value.color === saveColor
     );
 
     if (findExistingLabel) {
       Alert.alert("Label already exist!");
-    } else if (newLabel.title === "" && newLabel.color === "") {
+    } else if (newLabel.labelName === "" && newLabel.color === "") {
       props.setExistingLabel([...props.existingLabel]);
     } else {
       props.setExistingLabel([...props.existingLabel, newLabel]);
@@ -59,7 +59,7 @@ const LabelModal = (props) => {
 
   const removeLabels = (item) => {
     const newArray = props.selectedLabels.filter(
-      (data) => data.title !== item.title
+      (data) => data.labelName !== item.labelName
     );
     props.setSelectedLabels([...newArray]);
   };
@@ -71,7 +71,7 @@ const LabelModal = (props) => {
 
   const addLabels = (item, index) => {
     console.log(item);
-    if (item.id === props.selectedLabels[index]?.id) {
+    if (item._id === props.selectedLabels[index]?._id) {
       Alert.alert("Cannot add the same label");
     } else {
       props.setSelectedLabels([...props.selectedLabels, item]);
@@ -136,7 +136,7 @@ const LabelModal = (props) => {
             marginRight: moderateScale(7),
           }}
         >
-          <Text>{item.title}</Text>
+          <Text>{item.labelName}</Text>
           <TouchableOpacity onPress={() => removeLabels(item)}>
             <AntDesign name="close" style={{ marginLeft: moderateScale(6) }} />
           </TouchableOpacity>
@@ -174,7 +174,7 @@ const LabelModal = (props) => {
           <View
             style={{
               padding: moderateScale(7),
-              backgroundColor: "gray",
+              backgroundColor: item.color,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: moderateScale(5),

@@ -1,33 +1,23 @@
-import {all, takeLatest, put} from 'redux-saga/effects';
-import axios from 'axios';
+import { all, takeLatest, put } from "redux-saga/effects";
+import axios from "axios";
+import { setListTask } from "../Redux/taskAction";
 
-function* getTask() {
+function* getTaskFromSaga() {
   try {
+    // const token = Store.getState().LoginReducer.token;
     const respond = yield axios.get(
-      'https://api.themoviedb.org/3/genre/movie/list?api_key=781eb13279207d3b00115859616b4710 ',
+      "http://whiteboard-team.herokuapp.com/card"
+      // {
+      // headers: { Authorization: `Bearer ${token}` },
+      // }
     );
-    console.log(respond);
-    const myTask = respond.data.genres;
-    yield put({type: 'SET_GENRES', payload: allGenres});
+    console.log(respond.data.data, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    yield put(setListTask(respond.data.data));
   } catch (error) {
     console.log(error);
   }
 }
 
-function* getMovies() {
-  try {
-    const respond = yield axios.get(
-      'https://api.themoviedb.org/3/discover/movie?api_key=781eb13279207d3b00115859616b4710 ',
-      // 'https://movie-review-team-a.herokuapp.com/api/movies',
-    );
-    const allMovies = respond.data.results;
-    yield put({type: 'SET_MOVIES', payload: allMovies});
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export function* HomeSaga() {
-  yield takeLatest('FETCH_TASK', getTask);
-  yield takeLatest('FETCH_MOVIES', getMovies);
+export function* TaskSaga() {
+  yield takeLatest("GET_LIST_TASK", getTaskFromSaga);
 }

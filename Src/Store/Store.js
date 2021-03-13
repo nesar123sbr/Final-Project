@@ -9,7 +9,7 @@ import { SagaWatcher } from "./SagaWatcher";
 const persistConfig = {
   key: "papanputih",
   storage: AsyncStorage,
-  blacklist: [],
+  blacklist: ["TeamBoardReducer"],
 };
 
 const SagaMiddleware = createSagaMiddleware();

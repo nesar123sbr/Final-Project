@@ -1,18 +1,26 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { moderateScale } from "react-native-size-matters";
 import { NewcardStyle } from "./style";
 import Entypo from "react-native-vector-icons/Entypo";
 import { Dropdown } from "./Components/Dropdown";
 import AllModals from "./Components/AllModals";
-// import {connect} from 'react-redux';
-// import {newCardReducer} from './Redux/newCardReducer';
+import HeaderDesc from "../../Shared/Component/Header/HeaderDesc";
+import { connect } from "react-redux";
+import { setDesc, setTitle } from "./Redux/newCardAction";
 
-export default function Newcard(props) {
+const Newcard = (props) => {
   return (
     <>
-      <View style={{ margin: 10 }}>
+      <HeaderDesc />
+      <ScrollView style={{ margin: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text>New Card Screen</Text>
           <TouchableOpacity onPress={() => setAddOptions(true)}>
@@ -20,19 +28,18 @@ export default function Newcard(props) {
           </TouchableOpacity>
         </View>
         <Text style={{ marginBottom: 15 }}>Title</Text>
-        <TextInput style={NewcardStyle.titleField} />
+        <TextInput
+          style={NewcardStyle.titleField}
+          onChangeText={(text) => props.setTitle(text)}
+        />
         <Dropdown />
 
         <Text style={{ marginBottom: 15 }}>Description</Text>
-        <TextInput style={NewcardStyle.descTextField} />
+        <TextInput
+          style={NewcardStyle.descTextField}
+          onChangeText={(text) => props.setDesc(text)}
+        />
         <View style={{ flexDirection: "row", marginTop: 30 }}>
-          <View style={{ marginRight: 50 }}>
-            <Text style={{ marginBottom: 20 }}>Assign To</Text>
-            <Text style={{ marginBottom: 20 }}>Priority</Text>
-            <Text style={{ marginBottom: 20 }}>Due Date</Text>
-            <Text style={{ marginBottom: 20 }}>Labels</Text>
-          </View>
-
           <AllModals />
         </View>
         <Text style={{ marginBottom: 10 }}>Comments</Text>
@@ -67,15 +74,19 @@ export default function Newcard(props) {
             consectetur adipiscing.
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
-}
+};
 
-// const mapStateToProps = (state) => ({
-//   selectedLabels: state.newCardReducer.selectedLabels,
-// });
+const mapStateToProps = (state) => ({
+  desc: state.newCardReducer.desc,
+  title: state.newCardReducer.title,
+});
 
-// const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  setDesc,
+  setTitle,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Newcard);
+export default connect(mapStateToProps, mapDispatchToProps)(Newcard);

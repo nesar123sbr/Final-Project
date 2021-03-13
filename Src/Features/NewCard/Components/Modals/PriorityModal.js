@@ -62,14 +62,14 @@ const PriorityModal = (props) => {
   const [addOptions, setAddOptions] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(null);
 
-  const choosePriority = (id, status) => {
+  const choosePriority = (id, data, status) => {
     const activeTmp = prioritySelect.find((value) => value.active);
     const isNotActive = { ...activeTmp, active: false };
     const getClick = prioritySelect.find((value) => value.id === id);
     const setActive = { ...getClick, active: true };
     priorityDummy[isNotActive.id] = isNotActive;
     priorityDummy[id] = setActive;
-    setPriority(priorityDummy);
+    props.setPriority(data);
     setSelectedPriority(setActive.id);
   };
 
@@ -95,7 +95,7 @@ const PriorityModal = (props) => {
           {prioritySelect.map((value) => {
             return (
               <TouchableOpacity
-                onPress={() => choosePriority(value.id, value.active)}
+                onPress={() => choosePriority(value.id, value, value.status)}
                 key={value.id.toString()}
                 style={{
                   flexDirection: "row",

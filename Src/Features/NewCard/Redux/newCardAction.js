@@ -1,20 +1,21 @@
-export const setCard = () => {
+export const setCard = (desc, title, priority, selectedDate) => {
   return {
     type: "SET_CARD",
+    desc,
+    title,
+    priority,
+    selectedDate,
   };
 };
 
-export const setTitle = (data) => {
+export const postCard = (desc, title, priority, selectedDate, labelId) => {
   return {
-    type: "SET_TITLE",
-    payload: data,
-  };
-};
-
-export const setDesc = (data) => {
-  return {
-    type: "SET_DESCRIPTION",
-    payload: data,
+    type: "POST_CARD",
+    desc,
+    title,
+    priority,
+    selectedDate,
+    labelId,
   };
 };
 
@@ -86,5 +87,26 @@ export const setListLabel = (data, status) => {
     type: "SET_LIST_LABEL",
     payload: data,
     status: status,
+  };
+};
+
+export const setDesc = (data) => {
+  return {
+    type: "SET_DESC",
+    data,
+  };
+};
+
+export const setTitle = (data) => {
+  return {
+    type: "SET_TITLE",
+    data,
+  };
+};
+
+export const setLabelid = (data) => {
+  return {
+    type: "SET_LABEL_ID",
+    data,
   };
 };

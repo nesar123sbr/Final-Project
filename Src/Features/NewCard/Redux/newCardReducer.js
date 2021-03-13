@@ -3,8 +3,8 @@ const initialState = {
   title: "",
   assign: [],
   priority: [],
-  duedate: "",
   labelName: "",
+  labelId: "",
   comment: "",
   existingLabel: [],
   selectedLabels: [],
@@ -36,24 +36,25 @@ export const newCardReducer = (state = initialState, action) => {
     case "SET_CARD":
       return {
         ...state,
-        desc: action.payload,
-        selectedMembers: action.payload,
-        priority: action.payload,
-        assign: action.payload,
-        selectedDate: action.payload,
-        selectedLabels: action.payload,
+        title: action.title,
+        desc: action.desc,
+        priority: action.priority,
+        selectedDate: action.selectedDate,
+        // selectedMembers: action.payload,
+        // assign: action.payload,
+        // selectedLabels: action.payload,
       };
 
     case "SET_TITLE":
       return {
         ...state,
-        title: action.payload,
+        title: action.data,
       };
 
-    case "SET_DESCRIPTION":
+    case "SET_DESC":
       return {
         ...state,
-        desc: action.payload,
+        desc: action.data,
       };
 
     case "SET_COMMENT":
@@ -72,12 +73,14 @@ export const newCardReducer = (state = initialState, action) => {
       return {
         ...state,
         existingLabel: action.payload,
+        labelId: action.payload,
       };
 
     case "SET_SELECTED_LABEL":
       return {
         ...state,
         selectedLabels: action.payload,
+        labelId: action.payload,
       };
 
     case "SET_SELECTED_MEMBER":
@@ -110,6 +113,13 @@ export const newCardReducer = (state = initialState, action) => {
         existingLabel: action.payload,
         openModal: action.status,
       };
+
+    case "SET_LABEL_ID":
+      return {
+        ...state,
+        labelId: action.data,
+      };
+
     default:
       return state;
   }

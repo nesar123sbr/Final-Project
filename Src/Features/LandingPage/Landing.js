@@ -8,9 +8,35 @@ import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { getListTeams } from "./Redux/Action";
 import { getListTeam } from "../TeamPage/Redux/teamAction";
+<<<<<<< HEAD
 import { getListTeamBoard } from "../TeamBoard/Redux/Action";
 import FastImage from "react-native-fast-image";
 import Spinner from "react-native-loading-spinner-overlay"
+=======
+
+const dataFromDummyAPI = [
+  {
+    cardTitle1: "idev internal23",
+    cardTitle2: "on idev Project",
+    progress: "Done",
+    countTask: 5,
+  },
+
+  {
+    cardTitle1: "idev internal45",
+    cardTitle2: "on idev Project",
+    progress: "Done",
+    countTask: 5,
+  },
+
+  {
+    cardTitle1: "idev internal67",
+    cardTitle2: "on idev Project",
+    progress: "Done",
+    countTask: 5,
+  },
+];
+>>>>>>> cd17258ae8482bc4d41d370312359a9887060212
 
 function Landing(props) {
   const { navigation } = props;

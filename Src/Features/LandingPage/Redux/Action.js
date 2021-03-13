@@ -4,6 +4,7 @@ export const setListTeams = (payload) => {
       payload,
     };
   };
+  
   export const getListTeams = (payload) => {
     return {
       type: "GET_LIST_TEAMS",

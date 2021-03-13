@@ -9,6 +9,7 @@ import Newcard from "../../Features/NewCard/Newcard";
 import { Store } from "../../Store/Store";
 import changeEmail from "../../Features/ProfilePage/changeEmail";
 import changePass from "../../Features/ProfilePage/changePass";
+import Notification from "../../Features/Notification/Notification"
 
 const Stack = createStackNavigator();
 
@@ -56,6 +57,12 @@ const Navigator = ({ navigation, route }) => {
         name="changePass"
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        component={Notification}
+        name="Notification"
+        options={{ headerShown: false }}
+      />
+      
     </Stack.Navigator>
   );
 };

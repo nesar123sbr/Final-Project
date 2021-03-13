@@ -5,9 +5,18 @@ import { teamSaga } from "../Features/TeamPage/Redux/teamSaga";
 import { newCardSagas } from "../Features/NewCard/Redux/newCardSaga";
 import { forgotPasswordSaga } from "../Auth/ForgotPassword/Redux/Saga";
 import { ProfileSaga } from "../Features/ProfilePage/Redux/Saga";
-import { LandingSaga } from "../Features/LandingPage/Redux/Saga"
+import { LandingSaga } from "../Features/LandingPage/Redux/Saga";
+import { TeamBoardSaga } from "../Features/TeamBoard/Redux/Saga";
 
 export function* SagaWatcher() {
-  yield all([LoginSaga(), RegisterSaga(), forgotPasswordSaga(), ProfileSaga(),newCardSagas(), teamSaga(),LandingSaga()]);
-
+  yield all([
+    LoginSaga(),
+    RegisterSaga(),
+    forgotPasswordSaga(),
+    ProfileSaga(),
+    newCardSagas(),
+    teamSaga(),
+    LandingSaga(),
+    TeamBoardSaga(),
+  ]);
 }

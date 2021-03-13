@@ -4,13 +4,14 @@ export const getProfile = (payload) => {
     payload,
   };
 };
-export const patchProfile = (addName,addRole,addIndustry,addCompany) => {
+export const patchProfile = (addName,addRole,addIndustry,addCompany,response) => {
   return {
     type: "PATCH_PROFILE",
     addName,
     addRole,
     addIndustry,
-    addCompany
+    addCompany,
+    response
   };
 };
 export const patchPassword = (currentPass, newPass) => {

@@ -9,6 +9,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Toast from "react-native-simple-toast";
 import { patchPassword } from "./Redux/Action";
 import { connect } from "react-redux";
+import Spinner from "react-native-loading-spinner-overlay"
 
 
 function changePass(props) {
@@ -44,6 +45,11 @@ function changePass(props) {
 
   return (
     <View style={styles.container}>
+      <Spinner
+            visible={props.isLoading}
+            textContent={"Loading"}
+            textStyle={{ color: "white" }}
+          />
       <View style={styles.header}>
         <Nunito title="Me" size={moderateScale(24)} type="Bold" />
         <View style={styles.headerRight}>
@@ -149,7 +155,9 @@ function changePass(props) {
     </View>
   );
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  isLoading:state.GlobalReducer.isLoading
+});
 
 const mapDispatchToProps = {
   patchPassword,

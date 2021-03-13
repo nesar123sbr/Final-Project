@@ -7,12 +7,9 @@ import {
   ScrollView,
   Image,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
 } from "react-native";
-// import {
-//   launchCamera,
-//   launchImageLibrary
-// } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import Lonceng from "react-native-vector-icons/FontAwesome";
 import PanahKanan from "react-native-vector-icons/MaterialCommunityIcons";
 import {
@@ -27,130 +24,127 @@ import DropDownPicker from "react-native-dropdown-picker";
 import ModalDropdown from "react-native-modal-dropdown";
 import { patchProfile } from "./Redux/Action";
 import { removeCredential } from "./Redux/Action";
+import Spinner from "react-native-loading-spinner-overlay";
+import ModalPhoto from "../../Shared/Component/Modal/ModalPhoto";
 function Profile(props) {
   const { navigation } = props;
   const [addName, setAddName] = useState(props.name);
   const [addRole, setAddRole] = useState(props.role);
   const [addIndustry, setAddIndustry] = useState(props.industry);
   const [addCompany, setCompany] = useState(props.company_name);
-  // const [filePath, setFilePath] = useState({});
+  const [showMod, setShowMod] = useState(false);
+  const [filePath, setFilePath] = useState({});
 
-  // const requestCameraPermission = async () => {
-  //   if (Platform.OS === 'android') {
-  //     try {
-  //       const granted = await PermissionsAndroid.request(
-  //         PermissionsAndroid.PERMISSIONS.CAMERA,
-  //         {
-  //           title: 'Camera Permission',
-  //           message: 'App needs camera permission',
-  //         },
-  //       );
-  //       // If CAMERA Permission is granted
-  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
-  //     } catch (err) {
-  //       console.warn(err);
-  //       return false;
-  //     }
-  //   } else return true;
-  // };
+  const requestCameraPermission = async () => {
+    if (Platform.OS === "android") {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: "Camera Permission",
+            message: "App needs camera permission",
+          }
+        );
+        // If CAMERA Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    } else return true;
+  };
 
-  // const requestExternalWritePermission = async () => {
-  //   if (Platform.OS === 'android') {
-  //     try {
-  //       const granted = await PermissionsAndroid.request(
-  //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-  //         {
-  //           title: 'External Storage Write Permission',
-  //           message: 'App needs write permission',
-  //         },
-  //       );
-  //       // If WRITE_EXTERNAL_STORAGE Permission is granted
-  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
-  //     } catch (err) {
-  //       console.warn(err);
-  //       alert('Write permission err', err);
-  //     }
-  //     return false;
-  //   } else return true;
-  // };
+  const requestExternalWritePermission = async () => {
+    if (Platform.OS === "android") {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: "External Storage Write Permission",
+            message: "App needs write permission",
+          }
+        );
+        // If WRITE_EXTERNAL_STORAGE Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        alert("Write permission err", err);
+      }
+      return false;
+    } else return true;
+  };
 
-  // const captureImage = async (type) => {
-  //   let options = {
-  //     mediaType: type,
-  //     maxWidth: 300,
-  //     maxHeight: 550,
-  //     quality: 1,
-  //     // videoQuality: 'low',
-  //     // durationLimit: 30, //Video max duration in seconds
-  //     saveToPhotos: true,
-  //   };
-  //   let isCameraPermitted = await requestCameraPermission();
-  //   let isStoragePermitted = await requestExternalWritePermission();
-  //   if (isCameraPermitted && isStoragePermitted) {
-  //     launchCamera(options, (response) => {
-  //       console.log('Response = ', response);
+  const captureImage = () => {
+    let options = {
+      mediaType: "photo",
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+      // videoQuality: 'low',
+      // durationLimit: 30, //Video max duration in seconds
+      saveToPhotos: true,
+    };
 
-  //       if (response.didCancel) {
-  //         alert('User cancelled camera picker');
-  //         return;
-  //       } else if (response.errorCode == 'camera_unavailable') {
-  //         alert('Camera not available on device');
-  //         return;
-  //       } else if (response.errorCode == 'permission') {
-  //         alert('Permission not satisfied');
-  //         return;
-  //       } else if (response.errorCode == 'others') {
-  //         alert(response.errorMessage);
-  //         return;
-  //       }
-  //       console.log('base64 -> ', response.base64);
-  //       console.log('uri -> ', response.uri);
-  //       console.log('width -> ', response.width);
-  //       console.log('height -> ', response.height);
-  //       console.log('fileSize -> ', response.fileSize);
-  //       console.log('type -> ', response.type);
-  //       console.log('fileName -> ', response.fileName);
-  //       setFilePath(response);
-  //     });
-  //   }
-  // };
+    launchCamera(options, (response) => {
+      console.log("Response = ", response);
 
-  // const chooseFile = (type) => {
-  //   let options = {
-  //     mediaType: type,
-  //     maxWidth: 300,
-  //     maxHeight: 550,
-  //     quality: 1,
-  //   };
-  //   launchImageLibrary(options, (response) => {
-  //     console.log('Response = ', response);
+      if (response.didCancel) {
+        alert("User cancelled camera picker");
+        return;
+      } else if (response.errorCode == "camera_unavailable") {
+        alert("Camera not available on device");
+        return;
+      } else if (response.errorCode == "permission") {
+        alert("Permission not satisfied");
+        return;
+      } else if (response.errorCode == "others") {
+        alert(response.errorMessage);
+        return;
+      }
+      console.log("base64 -> ", response.base64);
+      console.log("uri -> ", response.uri);
+      console.log("width -> ", response.width);
+      console.log("height -> ", response.height);
+      console.log("fileSize -> ", response.fileSize);
+      console.log("type -> ", response.type);
+      console.log("fileName -> ", response.fileName);
+      setFilePath(response);
+    });
+  };
 
-  //     if (response.didCancel) {
-  //       alert('User cancelled camera picker');
-  //       return;
-  //     } else if (response.errorCode == 'camera_unavailable') {
-  //       alert('Camera not available on device');
-  //       return;
-  //     } else if (response.errorCode == 'permission') {
-  //       alert('Permission not satisfied');
-  //       return;
-  //     } else if (response.errorCode == 'others') {
-  //       alert(response.errorMessage);
-  //       return;
-  //     }
-  //     console.log('base64 -> ', response.base64);
-  //     console.log('uri -> ', response.uri);
-  //     console.log('width -> ', response.width);
-  //     console.log('height -> ', response.height);
-  //     console.log('fileSize -> ', response.fileSize);
-  //     console.log('type -> ', response.type);
-  //     console.log('fileName -> ', response.fileName);
-  //     setFilePath(response);
-  //   });
-  // };
+  const chooseFile = (type) => {
+    let options = {
+      mediaType: type,
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+    };
+    launchImageLibrary(options, (response) => {
+      console.log("Response = ", response);
 
-
-
+      if (response.didCancel) {
+        alert("User cancelled camera picker");
+        return;
+      } else if (response.errorCode == "camera_unavailable") {
+        alert("Camera not available on device");
+        return;
+      } else if (response.errorCode == "permission") {
+        alert("Permission not satisfied");
+        return;
+      } else if (response.errorCode == "others") {
+        alert(response.errorMessage);
+        return;
+      }
+      console.log("base64 -> ", response.base64);
+      console.log("uri -> ", response.uri);
+      console.log("width -> ", response.width);
+      console.log("height -> ", response.height);
+      console.log("fileSize -> ", response.fileSize);
+      console.log("type -> ", response.type);
+      console.log("fileName -> ", response.fileName);
+      setFilePath(response);
+    });
+  };
 
   const changeInName = (text) => {
     setAddName(text);
@@ -182,6 +176,11 @@ function Profile(props) {
   };
   return (
     <View style={{ height: "100%", width: "100%" }}>
+      <Spinner
+        visible={props.isLoading}
+        textContent={"Loading"}
+        textStyle={{ color: "white" }}
+      />
       <ScrollView
         contentContainerStyle={{
           padding: moderateScale(15),
@@ -217,52 +216,52 @@ function Profile(props) {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <View
-            style={{
-              borderRadius: 80,
-              backgroundColor: "#1A7D5A",
-              color: "white",
-              width: moderateScale(80),
-              height: moderateScale(80),
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: moderateScale(10),
-            }}
-          >
-            <Text
+        <TouchableOpacity
+          onPress={() => {
+            setShowMod(true);
+            props.patchProfile(props.response);
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View
               style={{
-                fontSize: moderateScale(40),
-                fontWeight: "bold",
+                borderRadius: 80,
+                backgroundColor: "#1A7D5A",
                 color: "white",
+                width: moderateScale(80),
+                height: moderateScale(80),
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: moderateScale(10),
               }}
             >
-              {props.name[0]}
+              <Text
+                style={{
+                  fontSize: moderateScale(40),
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                {props.name[0]}
+              </Text>
+            </View>
+
+            <Text
+              style={{
+                color: "grey",
+                marginLeft: moderateScale(20),
+                marginTop: moderateScale(10),
+                fontSize:moderateScale(18)
+              }}
+            >
+              Your Photo
             </Text>
           </View>
-
-          <Text
-            style={{
-              color: "grey",
-              marginLeft: 20,
-              marginTop: moderateScale(10),
-            }}
-          >
-            YOUR PHOTO
-          </Text>
-          {/* <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => captureImage('photo')}>
-          <Text style={styles.textStyle}>
-            Launch Camera for Image
-          </Text>
-        </TouchableOpacity> */}
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-evenly",
             paddingHorizontal: widthPercentageToDP(20),
           }}
         >
@@ -271,18 +270,18 @@ function Profile(props) {
               style={{
                 backgroundColor: "#e1d3f0",
                 color: "#00008b",
-                width: widthPercentageToDP(20),
                 alignSelf: "center",
+                width:moderateScale(60),
                 borderRadius: 20,
                 height: 35,
-                fontSize: moderateScale(13),
+                fontSize: moderateScale(14),
                 textAlign: "center",
                 alignContent: "center",
                 paddingTop: 7,
                 fontWeight: "bold",
               }}
             >
-              Upload
+              Update
             </Text>
           </TouchableOpacity>
           <TouchableOpacity>
@@ -290,7 +289,6 @@ function Profile(props) {
               style={{
                 color: "grey",
                 fontWeight: "bold",
-                width: widthPercentageToDP(20),
                 alignSelf: "center",
                 borderRadius: 20,
                 height: 35,
@@ -301,7 +299,7 @@ function Profile(props) {
                 textDecorationLine: "underline",
               }}
             >
-              Remove
+              Remove Account
             </Text>
           </TouchableOpacity>
         </View>
@@ -364,7 +362,7 @@ function Profile(props) {
             { label: "supervisor", value: "Supervisor" },
             { label: "owner", value: "Owner" },
           ]}
-          defaultValue={props.role.length ? addRole : ""}
+          defaultValue={props.role ? addRole : ""}
           style={{ paddingVertical: 10 }}
           containerStyle={{
             width: moderateScale(343),
@@ -398,7 +396,7 @@ function Profile(props) {
               { label: "agliculture", value: "Agliculture" },
               { label: "others", value: "Others" },
             ]}
-            defaultValue={props.industry.length ? addIndustry : ""}
+            defaultValue={props.industry ? addIndustry : ""}
             style={{ paddingVertical: 10 }}
             containerStyle={{
               width: moderateScale(343),
@@ -514,6 +512,13 @@ function Profile(props) {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <ModalPhoto
+        visible={showMod}
+        onRequestClose={() => setShowMod(false)}
+        onPress={() => setShowMod(false)}
+        onLibrary={() => chooseFile("photo")}
+        onCamera={() => captureImage("photo")}
+      />
     </View>
   );
 }
@@ -523,6 +528,7 @@ const mapStateToProps = (state) => ({
   role: state.ProfileReducer.role,
   industry: state.ProfileReducer.industry,
   company_name: state.ProfileReducer.company_name,
+  isLoading: state.GlobalReducer.isLoading,
 });
 
 const mapDispatchToProps = {

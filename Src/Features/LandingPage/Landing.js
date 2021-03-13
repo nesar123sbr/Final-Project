@@ -8,36 +8,15 @@ import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { getListTeams } from "./Redux/Action";
 import { getListTeam } from "../TeamPage/Redux/teamAction";
-
-
-const dataFromDummyAPI = [
-  {
-    cardTitle1: "idev internal23",
-    cardTitle2: "on idev Project",
-    progress: "Done",
-    countTask: 5,
-  },
-
-  {
-    cardTitle1: "idev internal45",
-    cardTitle2: "on idev Project",
-    progress: "Done",
-    countTask: 5,
-  },
-
-  {
-    cardTitle1: "idev internal67",
-    cardTitle2: "on idev Project",
-    progress: "Done",
-    countTask: 5,
-  },
-];
+import { getListTeamBoard } from "../TeamBoard/Redux/Action";
+import FastImage from "react-native-fast-image";
+import Spinner from "react-native-loading-spinner-overlay"
 
 function Landing(props) {
   const { navigation } = props;
   props.ListTeam.map((value, index) => {
     return {
-      index: index,
+      _id: value._id,
       teamName: value.teamName,
       expanded: true,
     };
@@ -55,6 +34,12 @@ function Landing(props) {
     setData(props.ListTeam);
     setEven(!even);
   };
+  const goToTeamBoard = (data) => {
+    navigation.navigate("TeamBoard", {
+      _id: data._id,
+      teamName: data.teamName,
+    });
+  };
 
   const renderTitle = ({ item, index }) => {
     const ItemSeparatorView = () => {
@@ -66,6 +51,7 @@ function Landing(props) {
         />
       );
     };
+    console.log(item);
 
     return (
       <View style={{ backgroundColor: "white" }}>
@@ -106,7 +92,7 @@ function Landing(props) {
                 color="#80848D"
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => goToTeamBoard(item)}>
               <Nunito
                 title={item.teamName}
                 type="SemiBold"
@@ -124,22 +110,25 @@ function Landing(props) {
           />
         </View>
         <View>
-          {item.expanded ? (
+          {item.boardId.length && item.expanded ? (
             <FlatList
               horizontal
-              data={dataFromDummyAPI}
+              data={item.boardId}
               showsHorizontalScrollIndicator={false}
               ItemSeparatorComponent={ItemSeparatorView}
-              keyExtractor={(item, index) => item.cardTitle1}
-              renderItem={({ item }) => (
-                <CardBoard
-                  cardTitle1={item.cardTitle1}
-                  cardTitle2={item.cardTitle2}
-                  progress={item.progress}
-                  countTask={item.countTask}
-                  onTap={() => navigation.navigate("TeamBoard")}
-                />
-              )}
+              keyExtractor={(item, index) => item._id}
+              renderItem={({ item }) => {
+                console.log("VAluee", item.title);
+                return (
+                  <CardBoard
+                    cardTitle1={item.title}
+                    // cardTitle2={item.cardTitle2}
+                    // progress={item.progress}
+                    // countTask={item.countTask}
+                    onTap={() => navigation.navigate("TeamBoardDetail")}
+                  />
+                );
+              }}
             />
           ) : null}
         </View>
@@ -147,9 +136,7 @@ function Landing(props) {
     );
   };
   return (
-
-    <View style={{ paddingBottom: hp(10),backgroundColor: "white" }}>
-
+    <View style={{ paddingBottom: hp(10), backgroundColor: "white" }}>
       <View
         style={{
           flexDirection: "row",
@@ -173,22 +160,50 @@ function Landing(props) {
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={props.ListTeam}
-        renderItem={(item) => renderTitle(item)}
-        keyExtractor={(item, index) => item._id}
-      />
+      {!props.ListTeam.length ? (
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            height: hp(80),
+          }}
+        >
+          <FastImage
+            style={{ width: moderateScale(288), height: moderateScale(164) }}
+            source={require("../../Assets/Image/Saly-17.png")}
+          />
+          <Nunito
+            title="Looking For Something ?"
+            size={moderateScale(20)}
+            type="LightItalic"
+          />
+        </View>
+      ) : (
+        <View style={{ height: hp(80) }}>
+          <Spinner
+            visible={props.isLoading}
+            textContent={"Loading"}
+            textStyle={{ color: "white" }}
+          />
+          <FlatList
+            data={props.ListTeam}
+            renderItem={(item) => renderTitle(item)}
+            keyExtractor={(item, index) => item._id}
+          />
+        </View>
+      )}
     </View>
   );
 }
 const mapStateToProps = (state) => ({
   ListTeam: state.LandingReducer.ListTeam,
+  isLoading: state.GlobalReducer.isLoading,
 });
-
 
 const mapDispatchToProps = {
   getListTeams,
   getListTeam,
+  getListTeamBoard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

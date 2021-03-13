@@ -19,6 +19,7 @@ import { TeamStyle } from "./style";
 import { connect } from "react-redux";
 import { postTeam, getListTeam } from "./Redux/teamAction";
 import { getListTeams } from "../LandingPage/Redux/Action";
+import Spinner from "react-native-loading-spinner-overlay"
 
 // const getRandomColor = () => {
 //   return (
@@ -122,6 +123,11 @@ const Team = (props) => {
   return (
     <>
       <View style={{backgroundColor: "white",height:"100%",width:"100%"}}>
+      <Spinner
+            visible={props.isLoading}
+            textContent={"Loading"}
+            textStyle={{ color: "white" }}
+          />
         <View>
           <View
             style={{
@@ -231,6 +237,7 @@ const Team = (props) => {
 const mapStateToProps = (state) => ({
   teamName: state.teamReducer.teamName,
   teamList: state.teamReducer.teamList,
+  isLoading:state.GlobalReducer.isLoading
 });
 
 const mapDispatchToProps = {

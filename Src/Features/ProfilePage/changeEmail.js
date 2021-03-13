@@ -7,6 +7,7 @@ import { Input } from "react-native-elements";
 import ButtonChange from "../../Shared/Component/Button/ButtonChange";
 import { connect } from "react-redux";
 import {patchEmail} from "./Redux/Action"
+import Spinner from "react-native-loading-spinner-overlay"
 
 function changeEmail(props) {
   const {navigation} = props
@@ -19,6 +20,11 @@ function changeEmail(props) {
   }
   return (
     <View style={styles.container}>
+      <Spinner
+            visible={props.isLoading}
+            textContent={"Loading"}
+            textStyle={{ color: "white" }}
+          />
       <View style={styles.header}>
         <Nunito title="Me" size={moderateScale(24)} type="Bold" />
         <View style={styles.headerRight}>
@@ -62,7 +68,9 @@ function changeEmail(props) {
     </View>
   );
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  isLoading:state.GlobalReducer.isLoading
+});
 
 const mapDispatchToProps = {
   patchEmail

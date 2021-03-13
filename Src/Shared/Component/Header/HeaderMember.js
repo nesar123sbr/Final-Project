@@ -3,8 +3,9 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import Nunito from '../Nunito';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen'
-export default function HeaderTeam({title1, onPress}) {
+export default function HeaderMember({title1, onPress,onPress1}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
@@ -24,7 +25,15 @@ export default function HeaderTeam({title1, onPress}) {
           size={moderateScale(18)}
         />
       </View>
-      <View/>
+      <TouchableOpacity onPress={onPress1}>
+        <View style={styles.icon}>
+          <Ionicons
+            name="checkmark-done-sharp"
+            size={moderateScale(18)}
+            color="white"
+          />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

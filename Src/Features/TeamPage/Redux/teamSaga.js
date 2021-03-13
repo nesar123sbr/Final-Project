@@ -3,9 +3,11 @@ import axios from "axios";
 import { setListTeam } from "./teamAction";
 import { Store } from "../../../Store/Store";
 import { navigate } from "../../../Shared/Navigation/Nav";
+import {setLoading} from "../../../Store/GlobalAction"
 
 function* getListTeamSaga() {
   try {
+    yield put(setLoading(true))
     const token = Store.getState().LoginReducer.token;
     const respond = yield axios.get(
       "https://whiteboard-team.herokuapp.com/api/team",
@@ -17,6 +19,8 @@ function* getListTeamSaga() {
     yield put(navigate("Team", {}));
   } catch (error) {
     console.log(error);
+  }finally{
+    yield put(setLoading(false))
   }
 }
 
@@ -24,7 +28,7 @@ function* postTeamSaga(payload) {
   console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
   const token = Store.getState().LoginReducer.token;
   try {
-    console.log(token);
+    yield put(setLoading(true))
     const body = {
       teamName: payload.teamName,
     };
@@ -37,6 +41,8 @@ function* postTeamSaga(payload) {
     yield put({ type: "GET_LIST_TEAM" });
   } catch (error) {
     console.log(error.response);
+  }finally{
+    yield put(setLoading(false))
   }
 }
 

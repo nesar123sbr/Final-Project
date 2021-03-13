@@ -4,3 +4,17 @@ export const setCardTeam = (payload) =>  {
       payload,
     }
   }
+  export const postBoard = (saveBoard,_id) => {
+    return {
+      type : "POST_NEW_BOARD",
+      saveBoard,
+      _id
+    }
+  }
+  export const getListTeamBoard = (_id) => {
+    return {
+      type: "GET_LIST_TEAM_BOARD",
+      
+      _id
+    };
+  };

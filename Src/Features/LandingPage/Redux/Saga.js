@@ -5,8 +5,10 @@ import { Store } from "../../../Store/Store";
 import * as Navigation from "../../../Shared/Navigation/Nav";
 import Toast from "react-native-simple-toast";
 import { setListTeams } from "./Action";
+import {setLoading} from "../../../Store/GlobalAction"
 
 function* getSagaTeams({ payload }) {
+  yield put(setLoading(true));
   const { token } = Store.getState().LoginReducer;
   try {
     const AuthStr = "Bearer ".concat(token);
@@ -14,10 +16,12 @@ function* getSagaTeams({ payload }) {
       `https://whiteboard-team.herokuapp.com/api/team`,
       { headers: { Authorization: AuthStr } }
     );
-    console.log(respond)
+    console.log('teamRes',respond)
     yield put(setListTeams(respond.data.data));
   } catch (error) {
     console.log(error);
+  }finally{
+    yield put(setLoading(false));
   }
 }
 export const LandingSaga = function* () {

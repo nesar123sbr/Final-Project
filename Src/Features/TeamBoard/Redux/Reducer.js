@@ -9,6 +9,12 @@ export const TeamBoardReducer = (state = initialState, action) => {
         ...state,
         listCardTeam: action.payload,
       };
+
+    case "PUT_BOARD_ID":
+      return {
+        ...state,
+        _Id: action.data,
+      };
     default:
       return state;
   }

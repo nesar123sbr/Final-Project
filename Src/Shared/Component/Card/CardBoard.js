@@ -12,13 +12,10 @@ export default function CardBoard({
   progress,
   onPress,
   countTask,
-  onTap
   
 }) {
   
   return (
-    <TouchableOpacity style={{flexDirection:'row',marginVertical:moderateScale(10)}} onPress={onTap}>
-      
       
     <View style={styles.cardContainer}>
     <View style={{width:moderateScale(25),backgroundColor:'orange',paddingVertical:moderateScale(10),borderBottomLeftRadius:10,borderTopLeftRadius:10}}/>
@@ -63,7 +60,6 @@ export default function CardBoard({
       </View>
     </View>
     </View>
-    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({

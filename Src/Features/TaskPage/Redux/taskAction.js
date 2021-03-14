@@ -10,3 +10,10 @@ export const setListTask = (data) => {
     data,
   };
 };
+export const getCardData = (payload) => {
+  return {
+    type: "GET_CARD_DATA",
+    payload
+    
+  };
+};

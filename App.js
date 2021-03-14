@@ -32,10 +32,7 @@ const App = () => {
             backgroundColor={"#37266C"}
             logoImage={require("./Src/Assets/Logo/Union.png")}
           >
-            {/* <Team /> */}
-            <Newcard />
-            {/* <Navigator /> */}
-            {/* <ModalPhoto/> */}
+            <Navigator />
           </AnimatedSplash>
         </NavigationContainer>
       </PersistGate>

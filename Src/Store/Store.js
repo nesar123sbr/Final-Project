@@ -6,10 +6,11 @@ import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { SagaWatcher } from "./SagaWatcher";
 
+
 const persistConfig = {
   key: "papanputih",
   storage: AsyncStorage,
-  blacklist: ["TeamBoardReducer"],
+  blacklist: [],
 };
 
 const SagaMiddleware = createSagaMiddleware();

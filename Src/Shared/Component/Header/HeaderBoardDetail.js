@@ -25,7 +25,7 @@ export default function HeaderBoardDetail({ title1, onPress, title2,onPress1 ,on
           size={moderateScale(18)}
         />
         <Nunito
-          title="One By Meja Putih"
+          title={`by ${title2}`}
           color="white"
           type="Bold"
           size={moderateScale(14)}

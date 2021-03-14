@@ -13,7 +13,8 @@ import FastImage from "react-native-fast-image";
 import Spinner from "react-native-loading-spinner-overlay"
 
 function Landing(props) {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  // const { teamName } = route.params;
   props.ListTeam.map((value, index) => {
     return {
       _id: value._id,
@@ -40,8 +41,8 @@ function Landing(props) {
       teamName: data.teamName,
     });
   };
-
-  const renderTitle = ({ item, index }) => {
+  
+  const renderTitle = ({ item, index}) => {
     const ItemSeparatorView = () => {
       return (
         <View
@@ -51,7 +52,6 @@ function Landing(props) {
         />
       );
     };
-    console.log(item);
 
     return (
       <View style={{ backgroundColor: "white" }}>
@@ -122,10 +122,9 @@ function Landing(props) {
                 return (
                   <CardBoard
                     cardTitle1={item.title}
-                    // cardTitle2={item.cardTitle2}
+                    // cardTitle2={teamName}
                     // progress={item.progress}
                     // countTask={item.countTask}
-                    onTap={() => navigation.navigate("TeamBoardDetail")}
                   />
                 );
               }}

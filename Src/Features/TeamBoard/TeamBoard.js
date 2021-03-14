@@ -11,14 +11,13 @@ import { postBoard } from "./Redux/Action";
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getListTeamBoard} from "./Redux/Action"
 import {getListTeams} from "../LandingPage/Redux/Action"
+import {getCardData} from "../TaskPage/Redux/taskAction"
 
 function TeamBoard(props) {
   const { navigation, route } = props;
   const { _id,teamName } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [saveBoard, setSaveBoard] = useState("");
-
-  console.log("lopU", _id);
   useEffect(() => {
     props.getListTeamBoard(_id)
   }, [])
@@ -30,8 +29,20 @@ function TeamBoard(props) {
       props.postBoard(saveBoard, _id);
     }
   };
+  const getItemBoard =(data) => {
+    props.getCardData({_id:data._id,
+      title:data.title,
+      teamName:teamName})
+  };
+  const getBack =(data) => {
+    navigation.navigate("Boards",{
+      teamName:teamName
+    })
+    props.getListTeams()
+  }
   return (
     <>
+    
      <Spinner
      visible={props.isLoading}
      textContent={"Loading"}
@@ -39,12 +50,9 @@ function TeamBoard(props) {
 
       /> 
       <HeaderTeam
-        onPress={() => {navigation.navigate("Boards")
-        props.getListTeams();
-      }}
+        onPress={() => getBack()}
         title1={teamName}
       />
-
       {props.listCardTeam.length ? (
         <>
           <ScrollView>
@@ -58,9 +66,9 @@ function TeamBoard(props) {
                   renderItem={({ item }) => (
                     <CardTeam
                       title1={item.title}
-                      // title2={item.title2}
+                      title2={teamName}
                       // count={item.count}
-                      onTap={() => navigation.navigate("TeamBoardDetail")}
+                      onTap={() => getItemBoard(item)}
                     />
                   )}
                 />
@@ -93,7 +101,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   postBoard,
   getListTeamBoard,
-  getListTeams
+  getListTeams,
+  getCardData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamBoard);

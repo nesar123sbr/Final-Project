@@ -110,3 +110,10 @@ export const setLabelid = (data) => {
     data,
   };
 };
+
+export const putLabelId = (data) => {
+  return {
+    type: "PUT_LABEL_ID",
+    data,
+  };
+};

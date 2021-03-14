@@ -7,6 +7,7 @@ import { forgotPasswordSaga } from "../Auth/ForgotPassword/Redux/Saga";
 import { ProfileSaga } from "../Features/ProfilePage/Redux/Saga";
 import { LandingSaga } from "../Features/LandingPage/Redux/Saga";
 import { TeamBoardSaga } from "../Features/TeamBoard/Redux/Saga";
+import { TaskSaga } from "../Features/TaskPage/Redux/taskSaga";
 
 export function* SagaWatcher() {
   yield all([
@@ -18,5 +19,6 @@ export function* SagaWatcher() {
     teamSaga(),
     LandingSaga(),
     TeamBoardSaga(),
+    TaskSaga(),
   ]);
 }

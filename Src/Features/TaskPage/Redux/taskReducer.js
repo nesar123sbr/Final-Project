@@ -10,6 +10,12 @@ export const taskReducer = (state = initialState, action) => {
         tasks: action.data,
       };
 
+    case "GET_LIST_TASK":
+      return {
+        ...state,
+        tasks: action.data,
+      };
+
     default:
       return state;
   }

@@ -17,6 +17,12 @@ export const teamReducer = (state = initialState, action) => {
         teamList: action.payload,
       };
 
+    case "PUT_TEAM_ID":
+      return {
+        ...state,
+        teamList: action.payload._id,
+      };
+
     default:
       return state;
   }

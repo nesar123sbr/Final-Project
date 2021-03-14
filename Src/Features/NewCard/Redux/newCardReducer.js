@@ -120,6 +120,12 @@ export const newCardReducer = (state = initialState, action) => {
         labelId: action.data,
       };
 
+    case "PUT_LABEL_ID":
+      return {
+        ...state,
+        labelId: action.data,
+      };
+
     default:
       return state;
   }

@@ -5,14 +5,16 @@ import * as Navigation from "../../../Shared/Navigation/Nav";
 
 function* getTaskFromSaga() {
   try {
+    console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
     // const token = Store.getState().LoginReducer.token;
     const respond = yield axios.get(
-      "http://whiteboard-team.herokuapp.com/card"
+      "https://whiteboard-team.herokuapp.com/card"
       // {
-      // headers: { Authorization: `Bearer ${token}` },
+      // headers: {},
       // }
     );
-    console.log(respond, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    // let filtered = respond.data.data;
+    console.log(respond.data.data, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     yield put(setListTask(respond.data.data));
   } catch (error) {
     console.log(error);

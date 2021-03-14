@@ -1,33 +1,15 @@
 import { all, takeLatest, put } from "redux-saga/effects";
 import axios from "axios";
-import { setLabel, setListLabel } from "./newCardAction";
-
-// function* postCard() {
-//   try {
-//     const body = {
-//       title: action.payload,
-//       desc: action.payload,
-//       selectedMembers: action.payload,
-//       priority: action.payload,
-//       selectedDate: action.payload,
-//       selectedLabels: action.payload,
-//     };
-//     const respond = yield axios.post("whiteboard-team.herokuapp.com/card", body);
-//     console.log(respond);
-//     yield put({ type: "SET_GENRES", payload: allGenres });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+import { setListLabel, putLabelId } from "./newCardAction";
+import { putTeamId } from "../../TeamPage/Redux/teamAction";
 
 function* postCardSaga(payload) {
   try {
     const body = {
       title: payload.title,
-      desc: payload.desc,
+      description: payload.desc,
       priority: payload.priority,
       dueDate: payload.selectedDate,
-      labelId: payload.labelId,
     };
     console.log(body, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     const respond = yield axios.post(
@@ -35,6 +17,36 @@ function* postCardSaga(payload) {
       body
     );
     console.log(respond);
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+
+function* assignTeamId(payload) {
+  try {
+    const body = { teamId: payload._id };
+    const respond = yield axios.put(
+      "https://whiteboard-team.herokuapp.com/api/card",
+      body
+    );
+    console.log(respond);
+    yield put(putTeamId(respond.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+}
+
+function* assignLabelId(payload) {
+  try {
+    const body = {
+      labelId: payload.labelId,
+    };
+    const respond = yield axios.put(
+      "https://whiteboard-team.herokuapp.com/api/card",
+      body
+    );
+    console.log(respond);
+    yield put(putLabelId(respond.data.data));
   } catch (error) {
     console.log(error.response);
   }
@@ -74,5 +86,7 @@ export function* newCardSagas() {
   yield takeLatest("POST_LABEL", postLabelSaga);
   yield takeLatest("GET_LIST_LABEL", getLabelFromSaga);
   yield takeLatest("POST_CARD", postCardSaga);
+  yield takeLatest("PUT_TEAM_ID", assignTeamId);
+  yield takeLatest("SET_LIST_LABEL", assignLabelId);
   // yield takeLatest("GET_LABEL", getLabel);
 }

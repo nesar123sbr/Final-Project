@@ -24,3 +24,10 @@ export const setListTeam = (data) => {
 //     payload: data,
 //   };
 // };
+
+export const putTeamId = (data) => {
+  return {
+    type: "PUT_TEAM_ID",
+    data,
+  };
+};

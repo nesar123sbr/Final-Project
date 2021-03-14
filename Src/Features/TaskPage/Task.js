@@ -46,28 +46,28 @@ const Task = (props) => {
               <Text style={{ marginLeft: 10 }}>{item.dueDate}</Text>
             </View>
 
-            {item.teamId.length
+            {/* {item.teamId.length
               ? item.teamId.map((value) => {
-                  return (
-                    <View key={value._id} style={{ flexDirection: "row" }}>
-                      <Text style={{ color: "gray" }}>{value.teamName}</Text>
-                      <Entypo
-                        name="dot-single"
-                        size={moderateScale(20)}
-                        style={{ color: "gray" }}
-                      />
-                      {value.boardId.length &&
-                        value.boardId.map((item) => {
-                          return (
-                            <Text key={item._id} style={{ color: "gray" }}>
-                              {item.title}
-                            </Text>
-                          );
-                        })}
-                    </View>
-                  );
+                  return ( */}
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ color: "gray" }}>{item.teamId?.teamName}</Text>
+              <Entypo
+                name="dot-single"
+                size={moderateScale(20)}
+                style={{ color: "gray" }}
+              />
+              {/* {value.boardId.length &&
+                value.boardId.map((item) => {
+                  return ( */}
+              <Text key={item._id} style={{ color: "gray" }}>
+                {item.boardId?.title}
+              </Text>
+              {/* );
+                })} */}
+            </View>
+            {/* );
                 })
-              : null}
+              : null} */}
           </View>
         </View>
       </TouchableOpacity>

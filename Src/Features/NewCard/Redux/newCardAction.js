@@ -117,3 +117,9 @@ export const putLabelId = (data) => {
     data,
   };
 };
+export const postList = (value) => {
+  return {
+    type: "POST_LABEL",
+    value
+  };
+};

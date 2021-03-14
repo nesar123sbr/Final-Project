@@ -13,8 +13,7 @@ export const setCardTeam = (payload) =>  {
   }
   export const getListTeamBoard = (_id) => {
     return {
-      type: "GET_LIST_TEAM_BOARD",
-      
+      type: "GET_LIST_TEAM_BOARD", 
       _id
     };
   };

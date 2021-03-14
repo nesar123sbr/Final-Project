@@ -22,8 +22,7 @@ export default function CardTeam({title1, title2, count,onTap}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: moderateScale(165),
-    height: moderateScale(175),
+    
     borderRadius: 5,
     backgroundColor: 'white',
     opacity: 5,

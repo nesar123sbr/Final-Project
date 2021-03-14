@@ -8,27 +8,17 @@ export const Dropdown = (props) => {
     <View>
       <Picker
         style={{backgroundColor: 'whitesmoke'}}
-        onValueChange={() => addList(value)}>
-        <Picker.Item
-          label="TO DO"
-          value="todo"
-          onPress={() => setAddList(value)}
-        />
-        <Picker.Item
-          label="On Process"
-          value="onprocess"
-          onPress={() => setAddList(value)}
-        />
-        <Picker.Item
-          label="Done"
-          value="done"
-          onPress={() => setAddList(value)}
-        />
-        <Picker.Item
-          label="Testing"
-          value="testing"
-          onPress={() => setAddList(value)}
-        />
+        onValueChange={onValueChange}
+        >
+          {props.listData.length && props.listData.map((value,index) => {
+            return <Picker.Item
+            label={value.title}
+            value= {value.title}
+            onPress={() => props.onValueChange(value)}
+          />
+          } )}
+        
+        
       </Picker>
     </View>
   );

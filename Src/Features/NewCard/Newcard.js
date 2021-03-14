@@ -14,7 +14,8 @@ import { Dropdown } from "./Components/Dropdown";
 import AllModals from "./Components/AllModals";
 import HeaderDesc from "../../Shared/Component/Header/HeaderDesc";
 import { connect } from "react-redux";
-import { setDesc, setTitle } from "./Redux/newCardAction";
+import { setDesc, setTitle,postList } from "./Redux/newCardAction";
+import {getListData} from "../TeamBoardDetail/Redux/Action"
 
 const Newcard = (props) => {
   return (
@@ -32,7 +33,7 @@ const Newcard = (props) => {
           style={NewcardStyle.titleField}
           onChangeText={(text) => props.setTitle(text)}
         />
-        <Dropdown />
+        <Dropdown {...props} onValueChange={(value) => postList(value)} />
 
         <Text style={{ marginBottom: 15 }}>Description</Text>
         <TextInput
@@ -82,11 +83,14 @@ const Newcard = (props) => {
 const mapStateToProps = (state) => ({
   desc: state.newCardReducer.desc,
   title: state.newCardReducer.title,
+  listData:state.ListDataReducer.listData
+
 });
 
 const mapDispatchToProps = {
   setDesc,
   setTitle,
+  postList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Newcard);

@@ -32,6 +32,7 @@ const App = () => {
             backgroundColor={"#37266C"}
             logoImage={require("./Src/Assets/Logo/Union.png")}
           >
+            {/* <Newcard /> */}
             <Navigator />
           </AnimatedSplash>
         </NavigationContainer>

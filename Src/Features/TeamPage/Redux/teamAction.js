@@ -18,16 +18,10 @@ export const setListTeam = (data) => {
     payload: data,
   };
 };
-// export const setTeam = (data) => {
-//   return {
-//     type: "SET_TEAM",
-//     payload: data,
-//   };
-// };
 
-export const putTeamId = (data) => {
+export const setTeamId = (data) => {
   return {
-    type: "PUT_TEAM_ID",
-    data,
+    type: "SET_TEAM_ID",
+    payload: data,
   };
 };

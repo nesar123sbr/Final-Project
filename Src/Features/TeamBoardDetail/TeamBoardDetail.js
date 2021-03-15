@@ -10,14 +10,20 @@ import { connect } from "react-redux";
 import { postList, getListData } from "./Redux/Action";
 import Spinner from "react-native-loading-spinner-overlay";
 import EmptyTeamBoardDetail from "../../Shared/Component/EmptyPage/EmptyTeamBoardDetail";
+import boardRepository from "./dummy"
 
 function TeamBoardDetail(props) {
   const { navigation, route } = props;
   const { _id, title, teamName } = route.params;
+ 
   const [showModal, setShowModal] = useState(false);
   const [saveList, setSaveList] = useState("");
   const [boardList, setBoardList] = useState([]);
 
+  const onDrag = (item) => {
+      console.log(item)
+  }
+ 
   const finalProjectDataList = () => {
     const dataList =
       props.listData.length &&
@@ -37,15 +43,17 @@ function TeamBoardDetail(props) {
             console.log(v.labelId);
           })
           .filter((data) => data !== undefined);
-
+          
         return {
           id: index + 1,
           name: value.title,
           rows: rows,
         };
       });
+
     console.log("namain", dataList);
     setBoardList(dataList);
+    console.log(dataList)
   };
 
   const addNewList = () => {
@@ -78,13 +86,16 @@ function TeamBoardDetail(props) {
               console.log("open", item);
             }}
             onDragEnd={(item) => {
-              console.log("onDragEnd", item);
+              onDrag( item);
             }}
             badgeWidth={moderateScale(40)}
             columnBorderRadius={15}
             columnBackgroundColor="#f3f3f3"
             burgerClick={() => setShowModal(true)}
-            AddNewCard={() => navigation.navigate("Newcard")}
+            AddNewCard={() => navigation.navigate("Newcard",{
+              nama:title,
+              nama1:teamName
+            })}
             cardContent={(data) => (
               <CardBoardDetail
                 data={data.label}

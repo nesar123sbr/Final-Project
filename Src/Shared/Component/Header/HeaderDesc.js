@@ -6,11 +6,11 @@ import { moderateScale } from "react-native-size-matters";
 import { connect } from "react-redux";
 import { postCard } from "../../../Features/NewCard/Redux/newCardAction";
 
-const Header = (props) => {
+const Header = ({props,boardName,onTap1,boardName1,timName}) => {
   return (
     <View style={styles.container}>
       <View style={styles.ButtonDone}>
-        <TouchableOpacity>
+        <TouchableOpacity  onPress={onTap1} >
           <MaterialCommunityIcons
             name="close"
             color="white"
@@ -44,16 +44,16 @@ const Header = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.title}>
-        <Nunito title="idev project" color="white" size={moderateScale(18)} />
+        <Nunito title={boardName} color="white" size={moderateScale(18)} />
       </View>
       <View style={styles.desc}>
         <Nunito
-          title="idevby on meja"
+          title={timName}
           color="white"
           style={{ paddingRight: 3 }}
         />
         <Nunito title="|" color="white" style={{ paddingRight: 3 }} />
-        <Nunito title="idevfffff" color="white" />
+        <Nunito title={boardName1} color="white" />
       </View>
     </View>
   );

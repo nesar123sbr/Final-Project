@@ -22,7 +22,7 @@ export default function CardBoardDetail({ title2, onPress, data }) {
         </View>
       </View>
       <View style={styles.labelTitle2}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
           <Nunito
             title={title2}
             type="SemiBold"

@@ -26,6 +26,7 @@ import { patchProfile } from "./Redux/Action";
 import { removeCredential } from "./Redux/Action";
 import Spinner from "react-native-loading-spinner-overlay";
 import ModalPhoto from "../../Shared/Component/Modal/ModalPhoto";
+import FastImage from "react-native-fast-image";
 function Profile(props) {
   const { navigation } = props;
   const [addName, setAddName] = useState(props.name);
@@ -235,15 +236,28 @@ function Profile(props) {
                 marginTop: moderateScale(10),
               }}
             >
-              <Text
-                style={{
-                  fontSize: moderateScale(40),
-                  fontWeight: "bold",
-                  color: "white",
-                }}
-              >
-                {props.name[0]}
-              </Text>
+              {props.photo ? (
+                <>
+                  <FastImage
+                    style={{alignSelf: "center" }}
+                    source={{
+                      uri: `${props.photo}`,
+                      priority: FastImage.priority.contain,
+                    }}
+                    resizeMode={FastImage.resizeMode.stretch}
+                  />
+                </>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: moderateScale(40),
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  {props.name[0]}
+                </Text>
+              )}
             </View>
 
             <Text
@@ -251,7 +265,7 @@ function Profile(props) {
                 color: "grey",
                 marginLeft: moderateScale(20),
                 marginTop: moderateScale(10),
-                fontSize:moderateScale(18)
+                fontSize: moderateScale(18),
               }}
             >
               Your Photo
@@ -271,7 +285,7 @@ function Profile(props) {
                 backgroundColor: "#e1d3f0",
                 color: "#00008b",
                 alignSelf: "center",
-                width:moderateScale(60),
+                width: moderateScale(60),
                 borderRadius: 20,
                 height: 35,
                 fontSize: moderateScale(14),
@@ -529,6 +543,7 @@ const mapStateToProps = (state) => ({
   industry: state.ProfileReducer.industry,
   company_name: state.ProfileReducer.company_name,
   isLoading: state.GlobalReducer.isLoading,
+  photo: state.ProfileReducer.photo,
 });
 
 const mapDispatchToProps = {

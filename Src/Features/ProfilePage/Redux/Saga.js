@@ -17,6 +17,7 @@ function* getSagaProfile({ payload }) {
     );
     yield put({
       type: "SET_PROFILE",
+      photo:respond.data.data.photo,
       email: respond.data.data.email,
       name: respond.data.data.name,
       role: respond.data.data.role,
@@ -130,7 +131,7 @@ function* patchSagaProfile(payload) {
       validateStatus: (status) => status < 500,
     };
     const respond = yield call(axios, config);
-    console.log(respond, "bawah ni");
+    console.log(respond, "bawah ni yaaa");
     if (respond.status == 200) {
       yield Navigation.navigate({
         name: "Profile",

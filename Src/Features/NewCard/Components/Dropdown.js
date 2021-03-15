@@ -8,7 +8,6 @@ export const Dropdown = (props) => {
     <View>
       <Picker
         style={{backgroundColor: 'whitesmoke'}}
-        onValueChange={onValueChange}
         >
           {props.listData.length && props.listData.map((value,index) => {
             return <Picker.Item

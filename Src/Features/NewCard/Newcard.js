@@ -14,13 +14,24 @@ import { Dropdown } from "./Components/Dropdown";
 import AllModals from "./Components/AllModals";
 import HeaderDesc from "../../Shared/Component/Header/HeaderDesc";
 import { connect } from "react-redux";
-import { setDesc, setTitle,postList } from "./Redux/newCardAction";
-import {getListData} from "../TeamBoardDetail/Redux/Action"
+import { setDesc, setTitle, postList } from "./Redux/newCardAction";
+import { getListData } from "../TeamBoardDetail/Redux/Action";
 
 const Newcard = (props) => {
+  const { navigation, route } = props;
+  const { nama,nama1 } = route.params;
+  console.log("okokok", nama);
   return (
     <>
-      <HeaderDesc />
+      <HeaderDesc
+        boardName={nama}
+        boardName1={nama1}
+        timName={nama}
+        onTap1={() => {
+          navigation.navigate("TeamBoardDetail");
+          getListData();
+        }}
+      />
       <ScrollView style={{ margin: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text>New Card Screen</Text>
@@ -83,14 +94,14 @@ const Newcard = (props) => {
 const mapStateToProps = (state) => ({
   desc: state.newCardReducer.desc,
   title: state.newCardReducer.title,
-  listData:state.ListDataReducer.listData
-
+  listData: state.ListDataReducer.listData,
 });
 
 const mapDispatchToProps = {
   setDesc,
   setTitle,
-  postList
+  postList,
+  getListData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Newcard);

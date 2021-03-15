@@ -30,7 +30,8 @@ function TeamBoard(props) {
     }
   };
   const getItemBoard =(data) => {
-    props.getCardData({_id:data._id,
+    props.getCardData({
+      _id:data._id,
       title:data.title,
       teamName:teamName})
   };

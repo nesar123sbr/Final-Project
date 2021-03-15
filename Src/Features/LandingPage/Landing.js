@@ -14,7 +14,7 @@ import Spinner from "react-native-loading-spinner-overlay"
 
 function Landing(props) {
   const { navigation, route } = props;
-  // const { teamName } = route.params;
+  
   props.ListTeam.map((value, index) => {
     return {
       _id: value._id,

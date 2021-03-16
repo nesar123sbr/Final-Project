@@ -38,9 +38,10 @@ function TeamBoardDetail(props) {
                 name: v.title ? v.title : "",
                 description: v.description ? v.description : "",
                 label: v.labelId ? v.labelId : [],
+                priority:v.priority?v.priority:""
               };
             }
-            console.log(v.labelId);
+            console.log("idwijjdi",v.priority);
           })
           .filter((data) => data !== undefined);
           
@@ -101,6 +102,7 @@ function TeamBoardDetail(props) {
               <CardBoardDetail
                 data={data.label}
                 title2={data.name}
+                cases={data.priority}
                 onPress={() => navigation.navigate("Newcard")}
               />
             )}

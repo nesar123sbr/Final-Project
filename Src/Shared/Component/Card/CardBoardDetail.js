@@ -8,16 +8,56 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { moderateScale } from "react-native-size-matters";
 import LabelCard from "./LabelCard";
 
-export default function CardBoardDetail({ title2, onPress, data }) {
+export default function CardBoardDetail({ title2, onPress, data, cases }) {
+  const renderSwitch = (cases) => {
+    switch (cases) {
+      case 1:
+        return (
+          <MaterialIcons
+            name="arrow-upward"
+            color="red"
+            size={moderateScale(15)}
+          />
+        );
+      case 2:
+        return (
+          <MaterialIcons
+            name="arrow-upward"
+            color="orange"
+            size={moderateScale(15)}
+          />
+        );
+      case 3:
+        return (
+          <MaterialIcons
+            name="arrow-downward"
+            color="green"
+            size={moderateScale(15)}
+          />
+        );
+      case 4:
+        return (
+          <MaterialIcons
+            name="arrow-downward"
+            color="lightgreen"
+            size={moderateScale(15)}
+          />
+        );
+      default:
+        return null;
+    }
+  };
   return (
     <View style={styles.cardContainer}>
       <View>
-        <View style={{paddingRight:10}}>
+        <View style={{ paddingRight: 10 }}>
           <FlatList
             data={data}
             horizontal
             keyExtractor={(item, index) => item._id}
-            renderItem={({ item }) => <LabelCard label={item.labelName} color={item.color}  />}
+            renderItem={({ item }) => (
+              <LabelCard label={item.labelName} color={item.color} />
+            )}
           />
         </View>
       </View>
@@ -49,13 +89,11 @@ export default function CardBoardDetail({ title2, onPress, data }) {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: "row", alignSelf: "flex-end" }}>
-          <TouchableOpacity>
-            <MaterialIcons
-              name="arrow-upward"
-              color="red"
-              size={moderateScale(15)}
-            />
-          </TouchableOpacity>
+          <View>
+          {renderSwitch(cases)}
+          </View>
+          
+
           <TouchableOpacity style={{ paddingLeft: moderateScale(15) }}>
             <Foundation name="photo" color="blue" size={moderateScale(15)} />
           </TouchableOpacity>

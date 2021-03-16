@@ -160,8 +160,9 @@ function Profile(props) {
     setCompany(text);
   };
   const sendChangeProfile = () => {
-    props.patchProfile(addName, addRole, addIndustry, addCompany);
+    props.patchProfile(addName, addRole, addIndustry, addCompany,filePath);
   };
+  console.log("fotollll",filePath)
 
   useEffect(() => {
     props.getProfile();
@@ -175,6 +176,7 @@ function Profile(props) {
     props.logOut();
     // props.removeCredential();
   };
+  console.log("photo",props.photo)
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Spinner
@@ -220,7 +222,6 @@ function Profile(props) {
         <TouchableOpacity
           onPress={() => {
             setShowMod(true);
-            props.patchProfile(props.response);
           }}
         >
           <View style={{ flexDirection: "row" }}>
@@ -239,12 +240,12 @@ function Profile(props) {
               {props.photo ? (
                 <>
                   <FastImage
-                    style={{alignSelf: "center" }}
+                    style={{alignSelf: "center",width:100,height:100 ,borderRadius:20}}
                     source={{
-                      uri: `${props.photo}`,
+                      uri: `${filePath.uri?filePath.uri:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.stack.imgur.com%2F34AD2.jpg&f=1&nofb=1"}`,
                       priority: FastImage.priority.contain,
                     }}
-                    resizeMode={FastImage.resizeMode.stretch}
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </>
               ) : (

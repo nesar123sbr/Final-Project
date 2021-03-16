@@ -121,13 +121,13 @@ function* patchSagaProfile(payload) {
     body.append("role", payload.addRole);
     body.append("industry", payload.addIndustry);
     body.append("company_name", payload.addCompany);
-    body.append("photo", payload.response);
+    body.append("photo", {uri:payload.response.uri,type:payload.response.type,name:payload.response.fileName});
     console.log(body, "body ku");
     const config = {
       url: "https://whiteboard-signup.herokuapp.com/profile",
       method: "patch",
       data: body,
-      headers: { Authorization: AuthStr },
+      headers: { Authorization: AuthStr,"Content-Type":"multipart/form-data" },
       validateStatus: (status) => status < 500,
     };
     const respond = yield call(axios, config);

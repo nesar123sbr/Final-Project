@@ -4,6 +4,7 @@ const intialState = {
   role: "",
   industry: "",
   company_name: "",
+  photo:""
 };
 
 export const ProfileReducer = (state = intialState, action) => {
@@ -16,6 +17,7 @@ export const ProfileReducer = (state = intialState, action) => {
         role: action.role,
         industry: action.industry,
         company_name: action.company_name,
+        photo:action.photo
       };
       // case "SET_OUT_PROFILE":
       // return {

@@ -26,7 +26,7 @@ const Header = ({props,boardName,onTap1,boardName1,timName}) => {
               props.title,
               props.priority.id + 1,
               props.selectedDate,
-              labelId
+              // labelId
             );
           }}
         >
@@ -86,7 +86,7 @@ const mapStateToProps = (state) => ({
   title: state.newCardReducer.title,
   priority: state.newCardReducer.priority,
   selectedDate: state.newCardReducer.selectedDate,
-  labelId: state.newCardReducer.labelId,
+  // labelId: state.newCardReducer.labelId,
 });
 
 const mapDispatchToProps = {

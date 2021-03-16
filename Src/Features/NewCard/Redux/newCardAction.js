@@ -15,7 +15,7 @@ export const postCard = (desc, title, priority, selectedDate, labelId) => {
     title,
     priority,
     selectedDate,
-    labelId,
+    // labelId,
   };
 };
 

@@ -63,6 +63,7 @@ function TeamBoardDetail(props) {
     props.getListData(_id);
     finalProjectDataList();
   }, []);
+  
   return (
     <View>
       <Spinner

@@ -8,52 +8,51 @@ import { moderateScale } from "react-native-size-matters";
 import EmptyTeamBoard from "../../Shared/Component/EmptyPage/EmptyTeamBoard";
 import ModalTeam from "../../Shared/Component/Modal/ModalTeam";
 import { postBoard } from "./Redux/Action";
-import Spinner from 'react-native-loading-spinner-overlay';
-import {getListTeamBoard} from "./Redux/Action"
-import {getListTeams} from "../LandingPage/Redux/Action"
-import {getCardData} from "../TaskPage/Redux/taskAction"
+import Spinner from "react-native-loading-spinner-overlay";
+import { getListTeamBoard } from "./Redux/Action";
+import { getListTeams } from "../LandingPage/Redux/Action";
+import { getCardData } from "../TaskPage/Redux/taskAction";
+import { setTeamId } from "../TeamPage/Redux/teamAction";
 
 function TeamBoard(props) {
   const { navigation, route } = props;
-  const { _id,teamName } = route.params;
+  const { _id, teamName } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [saveBoard, setSaveBoard] = useState("");
   useEffect(() => {
-    props.getListTeamBoard(_id)
-  }, [])
+    props.getListTeamBoard(_id);
+  }, []);
   const addNewBoard = () => {
-    const findBoard = props.listCardTeam.find((value) => value.title === saveBoard);
+    const findBoard = props.listCardTeam.find(
+      (value) => value.title === saveBoard
+    );
     if (findBoard) {
       Alert.alert("Board already exist!");
     } else {
       props.postBoard(saveBoard, _id);
     }
   };
-  const getItemBoard =(data) => {
+  const getItemBoard = (data) => {
     props.getCardData({
-      _id:data._id,
-      title:data.title,
-      teamName:teamName})
+      _id: data._id,
+      title: data.title,
+      teamName: teamName,
+    });
   };
-  const getBack =(data) => {
-    navigation.navigate("Boards",{
-      teamName:teamName
-    })
-    props.getListTeams()
-  }
+  const getBack = (data) => {
+    navigation.navigate("Boards", {
+      teamName: teamName,
+    });
+    props.getListTeams();
+  };
   return (
     <>
-    
-     <Spinner
-     visible={props.isLoading}
-     textContent={"Loading"}
-     textStyle={{color:"white"}}
-
-      /> 
-      <HeaderTeam
-        onPress={() => getBack()}
-        title1={teamName}
+      <Spinner
+        visible={props.isLoading}
+        textContent={"Loading"}
+        textStyle={{ color: "white" }}
       />
+      <HeaderTeam onPress={() => getBack()} title1={teamName} />
       {props.listCardTeam.length ? (
         <>
           <ScrollView>
@@ -69,7 +68,9 @@ function TeamBoard(props) {
                       title1={item.title}
                       title2={teamName}
                       // count={item.count}
-                      onTap={() => getItemBoard(item)}
+                      onTap={() => {
+                        getItemBoard(item);
+                      }}
                     />
                   )}
                 />
@@ -95,7 +96,7 @@ function TeamBoard(props) {
   );
 }
 const mapStateToProps = (state) => ({
-  listCardTeam:state.TeamBoardReducer.listCardTeam,
+  listCardTeam: state.TeamBoardReducer.listCardTeam,
   isLoading: state.GlobalReducer.isLoading,
 });
 
@@ -103,7 +104,8 @@ const mapDispatchToProps = {
   postBoard,
   getListTeamBoard,
   getListTeams,
-  getCardData
+  getCardData,
+  setTeamId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamBoard);

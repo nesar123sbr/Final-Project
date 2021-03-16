@@ -1,84 +1,56 @@
-import { all, takeLatest, put } from "redux-saga/effects";
+import { all, takeLatest, put, takeEvery, call } from "redux-saga/effects";
 import axios from "axios";
 import { setListLabel, putLabelId } from "./newCardAction";
-import { putTeamId } from "../../TeamPage/Redux/teamAction";
-import { putBoardId } from "../../TeamBoard/Redux/Action";
+import { putListId } from "../../TeamBoardDetail/Redux/Action";
 
-function* postCardSaga(payload) {
+function* postCardSaga(postCardData, labelId, boardId, teamId, listId) {
+  console.log(teamId, "teamId");
+  console.log(labelId, "labelId");
+  console.log(boardId, "boardId");
   try {
     const body = {
-      title: payload.title,
-      description: payload.desc,
-      priority: payload.priority,
-      dueDate: payload.selectedDate,
+      title: postCardData.title,
+      description: postCardData.desc,
+      priority: postCardData.priority,
+      dueDate: postCardData.selectedDate,
     };
-    const respond = yield axios.post(
-      "https://whiteboard-team.herokuapp.com/card",
-      body
+
+    const respond = yield call(axios, {
+      method: "post",
+      url: "https://whiteboard-team.herokuapp.com/card",
+      data: body,
+    });
+
+    yield labelId.forEach((value) => {
+      const label = axios.put(
+        `https://whiteboard-team.herokuapp.com/card/${respond.data.data._id}/label`,
+        { labelId: value }
+      );
+      console.log(label, "xxxxxxxxxxlabel");
+    });
+    const board = yield axios.put(
+      `https://whiteboard-team.herokuapp.com/card/${respond.data.data._id}/board`,
+      { boardId }
     );
-    console.log(respond);
+    console.log(board, "xxxxxxxxxxboard");
+    const team = yield axios.put(
+      `https://whiteboard-team.herokuapp.com/card/${respond.data.data._id}/team`,
+      { teamId }
+    );
+    console.log(team, "xxxxxxxxxxteam");
+    const list = yield axios.put(
+      `https://whiteboard-team.herokuapp.com/card/${respond.data.data._id}/list `,
+      { listId }
+    );
+    console.log(list, "xxxxxxxxxxlist");
   } catch (error) {
     console.log(error.response);
   }
 }
 
-function* assignTeamId(payload) {
-  try {
-    const respond = yield axios.put(
-      `https://whiteboard-team.herokuapp.com/card/${payload._id}/team`,
-      body
-    );
-    console.log(respond);
-    yield put(putTeamId(respond.data.data));
-  } catch (error) {
-    console.log(error.response);
-  }
+function* combinedSagas({ postCardData, labelId, boardId, teamId, listId }) {
+  yield postCardSaga(postCardData, labelId, boardId, teamId, listId);
 }
-
-function* assignLabelId(payload) {
-  try {
-    const body = {
-      labelId: payload.labelId,
-    };
-    const respond = yield axios.put(
-      `https://whiteboard-team.herokuapp.com/card/${payload._id}/label`
-    );
-    console.log(respond);
-    yield put(putLabelId(respond.data.data));
-  } catch (error) {
-    console.log(error.response);
-  }
-}
-
-function* assignBoardId(payload) {
-  try {
-    const body = {
-      labelId: payload.labelId,
-    };
-    const respond = yield axios.put(
-      `https://whiteboard-team.herokuapp.com/card/${payload._id}/board`
-    );
-    console.log(respond);
-    yield put(putBoardId(respond.data.data));
-  } catch (error) {
-    console.log(error.response);
-  }
-}
-
-// function* assignListId(payload) {
-//   try {
-//     const body = {
-//       labelId: payload.labelId,
-//     };
-//     const respond = yield axios.put(
-//       `https://whiteboard-team.herokuapp.com/card/${payload._id}/list`
-//     );
-//     console.log(respond);
-//     yield put(putListId(respond.data.data));
-//   } catch (error) {
-//     console.log(error.response);
-//   }
-// }
 
 function* postLabelSaga(payload) {
   try {
@@ -110,12 +82,8 @@ function* getLabelFromSaga() {
 }
 
 export function* newCardSagas() {
-  // yield takeLatest("SET_CARD", postCard);
   yield takeLatest("POST_LABEL", postLabelSaga);
   yield takeLatest("GET_LIST_LABEL", getLabelFromSaga);
   yield takeLatest("POST_CARD", postCardSaga);
-  yield takeLatest("PUT_TEAM_ID", assignTeamId);
-  yield takeLatest("PUT_BOARD_ID", assignBoardId);
-  yield takeLatest("SET_LIST_LABEL", assignLabelId);
-  // yield takeLatest("GET_LABEL", getLabel);
+  yield takeEvery("COMBINED_ACTION", combinedSagas);
 }

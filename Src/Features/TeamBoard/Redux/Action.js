@@ -14,14 +14,12 @@ export const postBoard = (saveBoard, _id) => {
 export const getListTeamBoard = (_id) => {
   return {
     type: "GET_LIST_TEAM_BOARD",
-
     _id,
   };
 };
-
-export const putBoardId = (data) => {
+export const putBoardId = (_id) => {
   return {
     type: "PUT_BOARD_ID",
-    data,
+    _id,
   };
 };

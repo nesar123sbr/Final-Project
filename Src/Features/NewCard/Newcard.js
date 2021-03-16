@@ -15,11 +15,11 @@ import AllModals from "./Components/AllModals";
 import HeaderDesc from "../../Shared/Component/Header/HeaderDesc";
 import { connect } from "react-redux";
 import { setDesc, setTitle, postList } from "./Redux/newCardAction";
-import { getListData } from "../TeamBoardDetail/Redux/Action";
+import { getListData, putListId } from "../TeamBoardDetail/Redux/Action";
 
 const Newcard = (props) => {
   const { navigation, route } = props;
-  const { nama,nama1 } = route.params;
+  const { nama, nama1 } = route.params;
   console.log("okokok", nama);
   return (
     <>
@@ -102,6 +102,7 @@ const mapDispatchToProps = {
   setTitle,
   postList,
   getListData,
+  putListId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Newcard);

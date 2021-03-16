@@ -8,14 +8,13 @@ export const setCard = (desc, title, priority, selectedDate) => {
   };
 };
 
-export const postCard = (desc, title, priority, selectedDate, labelId) => {
+export const postCard = (desc, title, priority, selectedDate) => {
   return {
     type: "POST_CARD",
     desc,
     title,
     priority,
     selectedDate,
-    // labelId,
   };
 };
 
@@ -117,9 +116,27 @@ export const putLabelId = (data) => {
     data,
   };
 };
+
 export const postList = (value) => {
   return {
     type: "POST_LABEL",
-    value
+    value,
+  };
+};
+
+export const combinedAction = (
+  postCardData,
+  labelId,
+  boardId,
+  teamId,
+  listId
+) => {
+  return {
+    type: "COMBINED_ACTION",
+    postCardData,
+    labelId,
+    boardId,
+    teamId,
+    listId,
   };
 };

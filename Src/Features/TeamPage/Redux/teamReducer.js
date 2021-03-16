@@ -1,6 +1,7 @@
 const initialState = {
   teamName: "",
   teamList: [],
+  teamId: "",
 };
 
 export const teamReducer = (state = initialState, action) => {
@@ -17,12 +18,11 @@ export const teamReducer = (state = initialState, action) => {
         teamList: action.payload,
       };
 
-    case "PUT_TEAM_ID":
+    case "SET_TEAM_ID":
       return {
         ...state,
-        teamList: action.payload._id,
+        teamId: action.payload,
       };
-
     default:
       return state;
   }

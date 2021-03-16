@@ -7,14 +7,14 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { connect } from "react-redux";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { getListTeams } from "./Redux/Action";
-import { getListTeam } from "../TeamPage/Redux/teamAction";
+import { getListTeam, setTeamId } from "../TeamPage/Redux/teamAction";
 import { getListTeamBoard } from "../TeamBoard/Redux/Action";
 import FastImage from "react-native-fast-image";
-import Spinner from "react-native-loading-spinner-overlay"
+import Spinner from "react-native-loading-spinner-overlay";
 
 function Landing(props) {
   const { navigation, route } = props;
-  
+
   props.ListTeam.map((value, index) => {
     return {
       _id: value._id,
@@ -41,8 +41,8 @@ function Landing(props) {
       teamName: data.teamName,
     });
   };
-  
-  const renderTitle = ({ item, index}) => {
+
+  const renderTitle = ({ item, index }) => {
     const ItemSeparatorView = () => {
       return (
         <View
@@ -92,7 +92,14 @@ function Landing(props) {
                 color="#80848D"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => goToTeamBoard(item)}>
+
+            {/* TeamName */}
+            <TouchableOpacity
+              onPress={() => {
+                goToTeamBoard(item);
+                props.setTeamId(item._id);
+              }}
+            >
               <Nunito
                 title={item.teamName}
                 type="SemiBold"
@@ -203,6 +210,7 @@ const mapDispatchToProps = {
   getListTeams,
   getListTeam,
   getListTeamBoard,
+  setTeamId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

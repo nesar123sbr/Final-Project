@@ -4,13 +4,32 @@ import Nunito from "../Nunito";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { moderateScale } from "react-native-size-matters";
 import { connect } from "react-redux";
-import { postCard } from "../../../Features/NewCard/Redux/newCardAction";
+import {
+  postCard,
+  combinedAction,
+} from "../../../Features/NewCard/Redux/newCardAction";
+import { putListId } from "../../../Features/TeamBoardDetail/Redux/Action";
 
-const Header = ({props,boardName,onTap1,boardName1,timName}) => {
+const Header = ({
+  combinedAction,
+  boardId,
+  postCard,
+  teamId,
+  labelId,
+  listId,
+  desc,
+  title,
+  priority,
+  selectedDate,
+  boardName,
+  onTap1,
+  boardName1,
+  timName,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.ButtonDone}>
-        <TouchableOpacity  onPress={onTap1} >
+        <TouchableOpacity onPress={onTap1}>
           <MaterialCommunityIcons
             name="close"
             color="white"
@@ -20,14 +39,15 @@ const Header = ({props,boardName,onTap1,boardName1,timName}) => {
 
         <TouchableOpacity
           onPress={() => {
-            const labelId = props.labelId.map((value) => value._id);
-            props.postCard(
-              props.desc,
-              props.title,
-              props.priority.id + 1,
-              props.selectedDate,
-              // labelId
-            );
+            const listLabelId = labelId.map((value) => value._id);
+            // postCard(desc, title, priority.id + 1, selectedDate, listLabelId);
+            const postCardData = {
+              desc,
+              title,
+              priority: priority.id + 1,
+              selectedDate,
+            };
+            combinedAction(postCardData, listLabelId, boardId, teamId, listId);
           }}
         >
           <View
@@ -47,11 +67,7 @@ const Header = ({props,boardName,onTap1,boardName1,timName}) => {
         <Nunito title={boardName} color="white" size={moderateScale(18)} />
       </View>
       <View style={styles.desc}>
-        <Nunito
-          title={timName}
-          color="white"
-          style={{ paddingRight: 3 }}
-        />
+        <Nunito title={timName} color="white" style={{ paddingRight: 3 }} />
         <Nunito title="|" color="white" style={{ paddingRight: 3 }} />
         <Nunito title={boardName1} color="white" />
       </View>
@@ -86,11 +102,15 @@ const mapStateToProps = (state) => ({
   title: state.newCardReducer.title,
   priority: state.newCardReducer.priority,
   selectedDate: state.newCardReducer.selectedDate,
-  // labelId: state.newCardReducer.labelId,
+  labelId: state.newCardReducer.labelId,
+  boardId: state.TeamBoardReducer.listCardTeam[0]._id,
+  teamId: state.teamReducer.teamId,
+  listId: state.ListDataReducer.listId,
 });
 
 const mapDispatchToProps = {
   postCard,
+  combinedAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
